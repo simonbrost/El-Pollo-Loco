@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>El Pollo Loco</title>
+    <link rel="icon" type="image/x-icon" href="/img/6_salsa_bottle/salsa_bottle.png">
+
+    <script src="classes/drawable-object.class.js"></script>
+    <script src="classes/movable-object.class.js"></script>
+    <script src="classes/collectable-object.class.js"></script>
+    <script src="classes/throwable-object.class.js"></script>
+    <script src="classes/character.class.js"></script>
+    <script src="classes/coin.class.js"></script>
+    <script src="classes/bottle.class.js"></script>
+    <script src="classes/cloud.class.js"></script>
+    <script src="classes/more-clouds.class.js"></script>
+    <script src="classes/chicken.class.js"></script>
+    <script src="classes/statusbar.class.js"></script>
+    <script src="classes/statusbar-bottle.class.js"></script>
+    <script src="classes/statusbar-coin.class.js"></script>
+    <script src="classes/world.class.js"></script>
+    <script src="classes/background-object.class.js"></script>
+    <script src="classes/keyboard.class.js"></script>
+    <script src="classes/level.class.js"></script>
+    <script src="classes/endboss.class.js"></script>
+    <script src="levels/level1.js"></script>
+    <script src="js/game.js"></script>
+</head>
+
+<body onload="init()">
+
+    <h1>El pollo loco</h1>
+
+   
+
+    <div id="start-screen">
+        <button id="start-button" onclick="startGame()">Start Game</button>
+        <button id="fullscreen-button" onclick="enlargeGame()">
+        <img src="img/11_controls/fullscreen.png" alt="fullscreen">
+        </button>
+    </div>
+
+    <div id="game-over-screen" style="display: none;">
+        <button id="restart-button" onclick="restartGame()">Restart Game</button>
+    </div>
+
+    <button id="mute-button" onclick="muteGame()">
+        <img id="mute-icon" src="img/11_controls/soundON.png" alt="Lautsprecher">
+      </button>
+      
+    <canvas id="canvas" width="720" height="480"></canvas>
+    <section class="controls">
+        <div class="arrows">
+            <div>
+                <img src="img/11_controls/arrow-left.png" alt="arrowLeft">
+                <img src="img/11_controls/arrow-right.png" alt="arrowRight">
+            </div>
+            <div>
+                Charakter bewegen
+            </div>
+        </div>
+
+        <div class="space">
+            <div>
+                <img src="img/11_controls/space.png" alt="space">
+            </div>
+            <div>
+                Springen
+            </div>
+        </div>
+
+        <div class="up">
+            <div>
+                <img src="img/11_controls/arrow-up.png" alt="arrowUp">
+            </div>
+            <div>
+                Werfen
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>
