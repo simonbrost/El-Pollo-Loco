@@ -1,6 +1,6 @@
 class Character extends MovableObject {
     y = 80;
-    width = 200;
+    width = 150;
     height = 250;
     speed = 10;
     world; // das geben wir diese klasse damit man hier auch auf die variablen aus der world classe zugreifen kann wenn ich das richtig verstanden habe

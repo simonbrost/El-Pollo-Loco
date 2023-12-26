@@ -104,7 +104,7 @@ class World {
 
     // In der World-Klasse
     removeObjectFromWorld(objectToRemove) {
-        // Überprüfen, zu welcher Liste das Objekt gehört, und alle Vorkommen daraus entfernen
+
         if (objectToRemove instanceof Coin) {
             this.level.coins = this.level.coins.filter(coin => coin !== objectToRemove);
         } else if (objectToRemove instanceof ThrowableObject) {
@@ -113,7 +113,6 @@ class World {
             this.level.bottles = this.level.bottles.filter(bottle => bottle !== objectToRemove);
         }
 
-        // Canvas neu zeichnen, um das Objekt zu entfernen
         this.draw();
     }
 
@@ -147,7 +146,7 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        // mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
