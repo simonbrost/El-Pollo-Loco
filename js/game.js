@@ -83,7 +83,6 @@ function hideGameOverScreen() {
 function restartGame() {
     hideGameOverScreen();
     startGame();
-    // Weitere Logik zum Neustarten des Spiels hier...
 }
 
 window.addEventListener('keydown', (event) => {

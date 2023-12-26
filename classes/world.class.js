@@ -45,16 +45,21 @@ class World {
                 // this.character.isHurt();
             }
         });
+        // In der checkCollisions-Methode der World-Klasse
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 coin.coinIsCollected();
-                this.coinStatusbar.setPercentage(this.coin.amountOfCoins);   
+                this.coinStatusbar.setPercentage(this.level.coins.length);
+
+                this.removeObjectFromWorld(coin);
             }
         });
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
-                bottle.bottleIsCollected(); 
-                this.bottleStatusbar.setPercentage(this.bottleStatusbar.amountOfBottles);
+                bottle.bottleIsCollected();
+                // this.bottleStatusbar.setPercentage(this.level.bottles.length);
+
+                this.removeObjectFromWorld(bottle);
             }
         });
     }
@@ -95,6 +100,21 @@ class World {
         objects.forEach(o => {
             this.addToMap(o);
         });
+    }
+
+    // In der World-Klasse
+    removeObjectFromWorld(objectToRemove) {
+        // Überprüfen, zu welcher Liste das Objekt gehört, und alle Vorkommen daraus entfernen
+        if (objectToRemove instanceof Coin) {
+            this.level.coins = this.level.coins.filter(coin => coin !== objectToRemove);
+        } else if (objectToRemove instanceof ThrowableObject) {
+            this.throwableObjects = this.throwableObjects.filter(obj => obj !== objectToRemove);
+        } else if (objectToRemove instanceof Bottle) {
+            this.level.bottles = this.level.bottles.filter(bottle => bottle !== objectToRemove);
+        }
+
+        // Canvas neu zeichnen, um das Objekt zu entfernen
+        this.draw();
     }
 
     // addToMap(mo) {
