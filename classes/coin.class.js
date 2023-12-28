@@ -7,13 +7,14 @@ class Coin extends CollectableObject {
 
     constructor(world) {
         super(world).loadImage('img/8_coin/coin_1.png')
-        this.x = 400 + Math.random() * 200;
+        this.x = 400 + Math.random() * 400;
     }
 
     coinIsCollected() {
         console.log('Coin wurde collected');
         this.coin_sound.play();
-        this.amountOfCoins + 1;
+        this.amountOfCoins += 20;
+        console.log(this.amountOfCoins)
         if (this.amountOfCoins < 0) {
             this.amountOfCoins = 0;
         }

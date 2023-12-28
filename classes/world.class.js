@@ -49,7 +49,7 @@ class World {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 coin.coinIsCollected();
-                this.coinStatusbar.setPercentage(this.level.coins.length);
+                // this.coinStatusbar.setPercentage(this.level.coins.length);
 
                 this.removeObjectFromWorld(coin);
             }
@@ -146,7 +146,7 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        // mo.drawFrame(this.ctx);
+        mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

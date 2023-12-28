@@ -109,7 +109,7 @@ class Character extends MovableObject {
         }, 120);
 
         setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 50);

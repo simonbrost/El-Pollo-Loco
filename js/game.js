@@ -25,6 +25,7 @@ function init() {
     gameOverScreen = document.getElementById('game-over-screen');
     muteButton = document.getElementById('mute-button');
     muteIcon = document.getElementById('mute-icon');
+    console.log('init...')
 }
 
 function startGame() {
@@ -80,9 +81,12 @@ function hideGameOverScreen() {
     gameOverScreen.style.display = 'none';
 }
 
+function gameOver() {
+    showGameOverScreen();
+}
+
 function restartGame() {
-    hideGameOverScreen();
-    startGame();
+    window.location.reload();
 }
 
 window.addEventListener('keydown', (event) => {

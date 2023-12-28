@@ -5,8 +5,12 @@ class MoreClouds extends MovableObject {
 
     constructor() {
         super().loadImage('img/5_background/layers/4_clouds/2.png')
-        this.x = Math.random() * 2200;
-        this.moveLeft();
+        this.x = Math.random() * 400 + 50;
+        this.animate();
     }
-
+    animate() {
+        setInterval(() => {
+            this.moveLeft();
+        }, 1000 / 60); //60fps
+    }
 }

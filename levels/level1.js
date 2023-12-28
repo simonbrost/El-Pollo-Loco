@@ -33,11 +33,19 @@ level1 = new Level(
         new MoreClouds(),
         new Cloud(),
         new MoreClouds(),
+        new Cloud(),
+        new MoreClouds()
     ],
     [
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
         new Bottle()
     ],
     [
+        new Coin(),
+        new Coin(),
+        new Coin(),
         new Coin()
     ],
     [

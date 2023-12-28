@@ -49,7 +49,7 @@ class MovableObject extends DrawableObject{
 
     isDead() {
         if (this.energy === 0) {
-            showGameOverScreen();
+            gameOver();
             return true;
         } else {
             return false;
