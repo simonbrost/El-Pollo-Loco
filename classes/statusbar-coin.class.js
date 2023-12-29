@@ -23,7 +23,7 @@ class CoinStatusbar extends DrawableObject {
     }
 
     setPercentage(percentage) {
-        this.percentage = percentage;
+        this.percentage = percentage * 20;
         let path = this.IMAGES[this.resolveImageIndex()];   // hier bekommen wir eine Zahl von 0-5 aus der Funktion resolveImageIndex()
         this.img = this.imageCache[path];                   // hier wird dann das entsprechnde Bild der Vraiable img in drawableobject zugewiesen und angezeigt
     }

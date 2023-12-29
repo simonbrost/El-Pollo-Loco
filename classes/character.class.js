@@ -52,7 +52,6 @@ class Character extends MovableObject {
     walking_sound = new Audio('audio/running.mp3');
     jumping_sound = new Audio('audio/jump.mp3');
 
-
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png'); //ruft (dank der Methode "super") aus der übergeordneten Klasse die Funktion "loadImage()" auf
         this.loadImages(this.IMAGES_IDLE);
@@ -62,6 +61,10 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DYING);
         this.applyGravity();
         this.animate();
+        this.offset.top = 110;
+        this.offset.bottom = 10;
+        this.offset.left = 20;
+        this.offset.right = 20;
     }
 
     animate() {

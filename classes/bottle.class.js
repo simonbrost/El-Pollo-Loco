@@ -6,6 +6,12 @@ class Bottle extends CollectableObject {
     speedX;
     bottle_sound = new Audio('audio/bottle_pop.mp3')
 
+    offset = {
+        top: 10,
+        bottom: 20,
+        left: 40,
+        right: 60,
+    }
 
     constructor() {
         super().loadImage('img/6_salsa_bottle/1_salsa_bottle_on_ground.png')
@@ -15,12 +21,12 @@ class Bottle extends CollectableObject {
     bottleIsCollected() {
         console.log('Bottle wurde collected');
         this.bottle_sound.play();
-        this.amountOfBottles + 1;
-        if (this.amountOfBottles < 0) {
-            this.amountOfBottles = 0;
+        world.amountOfBottles += 1;
+        if (world.amountOfBottles < 0) {
+            world.amountOfBottles = 0;
         }
         // Hier die Statusbar aktualisieren
-        world.bottleStatusbar.setPercentage(this.amountOfBottles);
+        world.bottleStatusbar.setPercentage(world.amountOfBottles);
 
     }
 

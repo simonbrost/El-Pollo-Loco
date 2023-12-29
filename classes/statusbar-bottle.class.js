@@ -1,7 +1,5 @@
 class BottleStatusbar extends DrawableObject{
     
-amountOfBottles = 0;    
-
     IMAGES = [
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/orange/0.png',
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/orange/20.png',
@@ -24,7 +22,7 @@ amountOfBottles = 0;
     }
 
     setPercentage(percentage) {
-        this.percentage = percentage;
+        this.percentage = percentage * 20;
         let path = this.IMAGES[this.resolveImageIndex()];   // hier bekommen wir eine Zahl von 0-5 aus der Funktion resolveImageIndex()
         this.img = this.imageCache[path];                   // hier wird dann das entsprechnde Bild der Vraiable img in drawableobject zugewiesen und angezeigt
     }

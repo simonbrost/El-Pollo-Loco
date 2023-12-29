@@ -24,6 +24,8 @@ class ThrowableObject extends MovableObject {
             this.x += 10;
         }, 15);
         this.animate();
+        world.amountOfBottles -= 1;
+        world.bottleStatusbar.setPercentage(world.amountOfBottles);
     }
 
     animate() {

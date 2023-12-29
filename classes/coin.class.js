@@ -3,7 +3,13 @@ class Coin extends CollectableObject {
     height = 150;
     y = 70;
     coin_sound = new Audio('audio/coin.mp3');
-    amountOfCoins = 0;
+    
+    offset = {
+        top: 50,
+        bottom: 100,
+        left: 50,
+        right: 100,
+    }
 
     constructor(world) {
         super(world).loadImage('img/8_coin/coin_1.png')
@@ -13,13 +19,13 @@ class Coin extends CollectableObject {
     coinIsCollected() {
         console.log('Coin wurde collected');
         this.coin_sound.play();
-        this.amountOfCoins += 20;
-        console.log(this.amountOfCoins)
-        if (this.amountOfCoins < 0) {
-            this.amountOfCoins = 0;
+        world.amountOfCoins += 1;
+        console.log(world.amountOfCoins)
+        if (world.amountOfCoins < 0) {
+            world.amountOfCoins = 0;
         }
         // Hier die Statusbar aktualisieren
-        world.coinStatusbar.setPercentage(this.amountOfCoins);
+        world.coinStatusbar.setPercentage(world.amountOfCoins);
 
 
     }

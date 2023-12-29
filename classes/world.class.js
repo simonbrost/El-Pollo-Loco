@@ -9,6 +9,8 @@ class World {
     bottleStatusbar = new BottleStatusbar();
     coinStatusbar = new CoinStatusbar();
     throwableObjects = [];
+    amountOfCoins = 0;
+    amountOfBottles = 0; 
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -31,7 +33,7 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.UP) {
+        if (this.keyboard.UP && this.amountOfBottles > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
         }
@@ -147,6 +149,7 @@ class World {
         }
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
+        mo.drawOffset(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
