@@ -24,7 +24,9 @@ function init() {
     startButton = document.getElementById('start-button');
     gameOverScreen = document.getElementById('game-over-screen');
     muteButton = document.getElementById('mute-button');
+    muteButtonIngame = document.getElementById('mute-button-ingame');
     muteIcon = document.getElementById('mute-icon');
+    muteIconIngame = document.getElementById('mute-icon-ingame');
     console.log('init...')
 }
 
@@ -36,7 +38,7 @@ function startGame() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     startScreen.style.display = 'none';
-    muteButton.style.display = 'block';
+    muteButtonIngame.style.display = 'block';
     
 }
 
@@ -67,9 +69,11 @@ function muteGame() {
     if (mute) {
         music.pause();
         muteIcon.src = 'img/11_controls/sound.png';
+        muteIconIngame.src = 'img/11_controls/sound.png';
     } else {
         music.play();
         muteIcon.src = 'img/11_controls/soundON.png';
+        muteIconIngame.src = 'img/11_controls/soundON.png';
     }
 }
 

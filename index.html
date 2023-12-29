@@ -34,12 +34,15 @@
 
     <h1>El pollo loco</h1>
 
-   
+
 
     <div id="start-screen">
         <button id="start-button" onclick="startGame()">Start Game</button>
         <button id="fullscreen-button" onclick="enlargeGame()">
-        <img src="img/11_controls/fullscreen.png" alt="fullscreen">
+            <img src="img/11_controls/fullscreen.png" alt="fullscreen">
+        </button>
+        <button id="mute-button" onclick="muteGame()">
+            <img id="mute-icon" src="img/11_controls/soundON.png" alt="Lautsprecher">
         </button>
     </div>
 
@@ -47,10 +50,10 @@
         <button id="restart-button" onclick="restartGame()">back to menu</button>
     </div>
 
-    <button id="mute-button" onclick="muteGame()">
-        <img id="mute-icon" src="img/11_controls/soundON.png" alt="Lautsprecher">
-      </button>
-      
+    <button id="mute-button-ingame" onclick="muteGame()" style="display: none;">
+        <img id="mute-icon-ingame" src="img/11_controls/soundON.png" alt="Lautsprecher">
+    </button>
+
     <canvas id="canvas" width="720" height="480"></canvas>
     <section class="controls">
         <div class="arrows">

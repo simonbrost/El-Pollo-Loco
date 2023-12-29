@@ -5,7 +5,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url('img/10_body_background/ms5c_9ybr_211015.jpg');
+    background: url('img/10_body_background/ms5c_9ybr_211015.jpg');
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -52,15 +52,13 @@ h1 {
 #start-screen button:hover{
     background-color: rgb(255,222,0);
 }
-#mute-button {
-    position: absolute;
+#mute-button-ingame {
+    position: relative;
+    top: 5vh;
     height: 40px;
-    width: 40px;
-    top: 249px; /* Passe die Position nach Bedarf an */
-    right: 350px; /* Passe die Position nach Bedarf an */
-    font-size: 38px; /* Passe die Schriftgröße nach Bedarf an */
+    width: 40px; 
+    font-size: 38px;
     cursor: pointer;
-    font-family: zabars;
     background-color: rgb(255, 176, 0);
     box-shadow: 3px 5px 10px rgb(255, 222, 0);
     border: 0;
@@ -68,7 +66,7 @@ h1 {
     z-index: 2;
 }
 
-#mute-button img{
+#mute-button-ingame img{
     height: 30px;
     width: 30px;
 }
