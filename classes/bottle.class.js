@@ -8,9 +8,9 @@ class Bottle extends CollectableObject {
 
     offset = {
         top: 10,
-        bottom: 20,
-        left: 40,
-        right: 60,
+        bottom: 10,
+        left: 20,
+        right: 40,
     }
 
     constructor() {

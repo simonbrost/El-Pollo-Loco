@@ -6,9 +6,9 @@ class Coin extends CollectableObject {
     
     offset = {
         top: 50,
-        bottom: 100,
+        bottom: 50,
         left: 50,
-        right: 100,
+        right: 50,
     }
 
     constructor(world) {
