@@ -10,7 +10,7 @@ class World {
     coinStatusbar = new CoinStatusbar();
     throwableObjects = [];
     amountOfCoins = 0;
-    amountOfBottles = 0; 
+    amountOfBottles = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -38,15 +38,29 @@ class World {
             this.throwableObjects.push(bottle);
         }
     }
+    // //Funktion vor der Extrabedingung des Jump Attacks
+    // checkCollisions() {
+    //     this.level.enemies.forEach((enemy) => {
+    //         if (this.character.isColliding(enemy)) {
+    //             this.character.hit();
+    //             this.statusBar.setPercentage(this.character.energy); //statusbar sinkt wenn hit
+    //             // this.character.isHurt();
+    //         }
+    //     });
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
+        this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy); //statusbar sinkt wenn hit
-                // this.character.isHurt();
+                if (this.character.speedY > 0 && this.character.y + this.character.height < enemy.y + enemy.height) {
+                    console.log('jumpattack');
+                    this.level.enemies.splice(index, 1);
+                } else {
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.energy);
+                }
             }
         });
+
         // In der checkCollisions-Methode der World-Klasse
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
