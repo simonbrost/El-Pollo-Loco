@@ -38,23 +38,14 @@ class World {
             this.throwableObjects.push(bottle);
         }
     }
-    // //Funktion vor der Extrabedingung des Jump Attacks
-    // checkCollisions() {
-    //     this.level.enemies.forEach((enemy) => {
-    //         if (this.character.isColliding(enemy)) {
-    //             this.character.hit();
-    //             this.statusBar.setPercentage(this.character.energy); //statusbar sinkt wenn hit
-    //             // this.character.isHurt();
-    //         }
-    //     });
 
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
                 if (this.character.speedY < 0 && this.character.isAboveGround()) {
-                    console.log('jumpattack');
-                    this.level.enemies.splice(index, 1);
                     this.character.jump();
+                    enemy.enemyDies();  // Verwende die enemyDies-Methode des spezifischen Feindobjekts
+                    this.level.enemies.splice(index, 1);
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);

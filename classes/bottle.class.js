@@ -19,7 +19,6 @@ class Bottle extends CollectableObject {
     }
 
     bottleIsCollected() {
-        console.log('Bottle wurde collected');
         this.bottle_sound.play();
         world.amountOfBottles += 1;
         if (world.amountOfBottles < 0) {

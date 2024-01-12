@@ -17,10 +17,8 @@ class Coin extends CollectableObject {
     }
 
     coinIsCollected() {
-        console.log('Coin wurde collected');
         this.coin_sound.play();
         world.amountOfCoins += 1;
-        console.log(world.amountOfCoins)
         if (world.amountOfCoins < 0) {
             world.amountOfCoins = 0;
         }

@@ -27,7 +27,6 @@ function init() {
     muteButtonIngame = document.getElementById('mute-button-ingame');
     muteIcon = document.getElementById('mute-icon');
     muteIconIngame = document.getElementById('mute-icon-ingame');
-    console.log('init...')
 }
 
 function startGame() {

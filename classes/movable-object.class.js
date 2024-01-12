@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject{
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    chickenIsDead = false;
 
     applyGravity() {
         setInterval(() => {
@@ -30,6 +31,10 @@ class MovableObject extends DrawableObject{
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
             this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
+    }
+
+    enemyDies() {
+        chickenIsDead = true;
     }
 
     hit() {
