@@ -29,7 +29,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-        }, 200);
+        }, 100);
     }
 
     checkThrowObjects() {
@@ -51,9 +51,10 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
-                if (this.character.speedY > 0 && this.character.y + this.character.height < enemy.y + enemy.height) {
+                if (this.character.speedY < 0 && this.character.isAboveGround()) {
                     console.log('jumpattack');
                     this.level.enemies.splice(index, 1);
+                    this.character.jump();
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
