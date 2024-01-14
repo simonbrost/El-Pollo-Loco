@@ -36,6 +36,10 @@ h1 {
     z-index: 1; /* Z-Index, um den Startscreen vor dem Canvas zu positionieren */
 }
 #start-screen button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
     margin: 40px;
     font-size: 38px;
     font-family: zabars;

@@ -51,6 +51,7 @@ class Character extends MovableObject {
     ];
     walking_sound = new Audio('audio/running.mp3');
     jumping_sound = new Audio('audio/jump.mp3');
+    boss_sound = new Audio('audio/boss_encounter.mp3');
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png'); //ruft (dank der Methode "super") aus der übergeordneten Klasse die Funktion "loadImage()" auf
@@ -89,6 +90,21 @@ class Character extends MovableObject {
                 this.jumping_sound.play();
             }
 
+            // Log the x-coordinate
+            console.log('Character position is', this.x);
+
+            // Check for boss encounter
+            if (this.x >= 1520) {
+                // Start playing the boss encounter music if not already playing
+                if (this.boss_sound.paused) {
+                    music.stop();
+                    this.boss_sound.play();
+                }
+            } else {
+                // Pause the boss encounter music if the character is not in the boss encounter area
+                this.boss_sound.pause();
+            }
+
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
@@ -118,4 +134,6 @@ class Character extends MovableObject {
         }, 50);
 
     }
+
+    // this.boss_sound.play();
 }

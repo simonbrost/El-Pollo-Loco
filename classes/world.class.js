@@ -44,7 +44,7 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.speedY < 0 && this.character.isAboveGround()) {
                     this.character.jump();
-                    enemy.enemyDies();  // Verwende die enemyDies-Methode des spezifischen Feindobjekts
+                    enemy.enemyDies(); 
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1);
                     }, 1000);
@@ -55,12 +55,19 @@ class World {
             }
         });
 
-        // In der checkCollisions-Methode der World-Klasse
+        // this.level.enemies.forEach((enemy, index) => {
+        //     if (this.throwableObjects.isColliding(enemy)) {
+        //         enemy.enemyDies(); 
+        //             setTimeout(() => {
+        //                 this.level.enemies.splice(index, 1);
+        //             }, 1000);
+        //     }
+        // });
+
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 coin.coinIsCollected();
                 // this.coinStatusbar.setPercentage(this.level.coins.length);
-
                 this.removeObjectFromWorld(coin);
             }
         });
@@ -68,7 +75,6 @@ class World {
             if (this.character.isColliding(bottle)) {
                 bottle.bottleIsCollected();
                 // this.bottleStatusbar.setPercentage(this.level.bottles.length);
-
                 this.removeObjectFromWorld(bottle);
             }
         });
