@@ -1,5 +1,5 @@
-class MovableObject extends DrawableObject{
-    
+class MovableObject extends DrawableObject {
+
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -18,10 +18,10 @@ class MovableObject extends DrawableObject{
     }
 
     isAboveGround() {
-        if(this instanceof ThrowableObject) { //throwable objects should always fall
+        if (this instanceof ThrowableObject) { //throwable objects should always fall
             return true;
         } else {
-        return this.y < 180;
+            return this.y < 180;
         }
     }
 
@@ -34,11 +34,20 @@ class MovableObject extends DrawableObject{
     }
 
     enemyDies() {
-        chickenIsDead = true;
+        this.chickenIsDead = true;
     }
 
     hit() {
         this.energy -= 5;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    bottleHit() {
+        this.energy -= 20;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -54,7 +63,9 @@ class MovableObject extends DrawableObject{
 
     isDead() {
         if (this.energy === 0) {
-            gameOver();
+            setTimeout(() => {
+                gameOver();
+            }, 1000);
             return true;
         } else {
             return false;

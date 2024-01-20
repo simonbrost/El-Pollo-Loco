@@ -44,7 +44,7 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.speedY < 0 && this.character.isAboveGround()) {
                     this.character.jump();
-                    enemy.enemyDies(); 
+                    enemy.enemyDies();
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1);
                     }, 1000);
@@ -55,14 +55,31 @@ class World {
             }
         });
 
-        // this.level.enemies.forEach((enemy, index) => {
-        //     if (this.throwableObjects.isColliding(enemy)) {
-        //         enemy.enemyDies(); 
+        // Kollision mit Bottles überprüfen merken falls was schief geht
+        // this.throwableObjects.forEach((bottle, bottleIndex) => {
+        //     this.level.enemies.forEach((enemy, enemyIndex) => {
+        //         if (bottle.isColliding(enemy)) {
+        //             enemy.enemyDies();
         //             setTimeout(() => {
-        //                 this.level.enemies.splice(index, 1);
+        //                 this.throwableObjects.splice(bottleIndex, 1);
+        //             }, 0); // oder setTimeout ohne Verzögerung, falls das nicht notwendig ist
+        //             setTimeout(() => {
+        //                 this.level.enemies.splice(enemyIndex, 1);
         //             }, 1000);
-        //     }
+        //         }
+        //     });
         // });
+
+        this.throwableObjects.forEach((bottle, bottleIndex) => {
+            this.level.enemies.forEach((enemy) => {
+                if (bottle.isColliding(enemy)) {
+                    enemy.bottleHit();
+                    this.throwableObjects.splice(bottleIndex, 1);
+                }
+            });
+        });
+
+
 
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {

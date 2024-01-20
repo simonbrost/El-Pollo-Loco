@@ -70,7 +70,7 @@ class Character extends MovableObject {
 
     animate() {
 
-        //movement
+    //movement
         setInterval(() => {
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -89,26 +89,24 @@ class Character extends MovableObject {
                 this.jump();
                 this.jumping_sound.play();
             }
-
-            // Log the x-coordinate
-            console.log('Character position is', this.x);
-
+        //--------------------diesen part wieder reinkommentieren für boss musik!!!!!!!!!!!!!!-------------------------->
             // Check for boss encounter
-            if (this.x >= 1520) {
-                // Start playing the boss encounter music if not already playing
-                if (this.boss_sound.paused) {
-                    music.stop();
-                    this.boss_sound.play();
-                }
-            } else {
-                // Pause the boss encounter music if the character is not in the boss encounter area
-                this.boss_sound.pause();
-            }
+
+            // if (this.x >= 1520) {
+            //     // Start playing the boss encounter music if not already playing
+            //     if (this.boss_sound.paused) {
+            //         muteGame(); //nur als platzhalter. mute funktion muss noch überarbeitet werden
+            //             this.boss_sound.play(); 
+            //     }
+            // } else {
+            //     // Pause the boss encounter music if the character is not in the boss encounter area
+            //     this.boss_sound.pause();
+            // }
 
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
-        //animationen
+    //animationen
         setInterval(() => {
             this.playAnimation(this.IMAGES_IDLE);
         }, 400);
@@ -134,6 +132,4 @@ class Character extends MovableObject {
         }, 50);
 
     }
-
-    // this.boss_sound.play();
 }
