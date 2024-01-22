@@ -4,6 +4,7 @@ let startScreen;
 let startButton;
 let keyboard = new Keyboard();
 music = new Audio('audio/music.mp3');
+victory = new Audio('audio/victory.mp3');
 music.volume = 0.2;
 music.loop = true;
 let mute = false;
@@ -23,6 +24,7 @@ function init() {
     startScreen = document.getElementById('start-screen');
     startButton = document.getElementById('start-button');
     gameOverScreen = document.getElementById('game-over-screen');
+    youWinScreen = document.getElementById('you-win-screen');
     muteButton = document.getElementById('mute-button');
     muteButtonIngame = document.getElementById('mute-button-ingame');
     muteIcon = document.getElementById('mute-icon');
@@ -84,8 +86,22 @@ function hideGameOverScreen() {
     gameOverScreen.style.display = 'none';
 }
 
+function showYouWinScreen() {
+    youWinScreen.style.display = 'block';
+}
+
+function hideYouWinScreen() {
+    youWinScreen.style.display = 'none';
+}
+
 function gameOver() {
     showGameOverScreen();
+}
+
+function youWin() {
+    showYouWinScreen();
+    music.pause();
+    this.victory.play();
 }
 
 function restartGame() {

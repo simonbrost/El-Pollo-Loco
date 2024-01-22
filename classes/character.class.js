@@ -70,7 +70,7 @@ class Character extends MovableObject {
 
     animate() {
 
-    //movement
+        //movement
         setInterval(() => {
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -89,7 +89,7 @@ class Character extends MovableObject {
                 this.jump();
                 this.jumping_sound.play();
             }
-        //--------------------diesen part wieder reinkommentieren für boss musik!!!!!!!!!!!!!!-------------------------->
+            //--------------------diesen part wieder reinkommentieren für boss musik!!!!!!!!!!!!!!-------------------------->
             // Check for boss encounter
 
             // if (this.x >= 1520) {
@@ -106,18 +106,22 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
-    //animationen
+        //animationen
         setInterval(() => {
             this.playAnimation(this.IMAGES_IDLE);
         }, 400);
 
         setInterval(() => {
-            if (this.isDead()) {
+            if (this.characterIsDead()) {
                 this.playAnimation(this.IMAGES_DYING);
-            } else if (this.isHurt()) {
+            }
+        }, 80);  // Ändere die Zeit nach Bedarf
+
+        setInterval(() => {
+            if (!this.characterIsDead() && this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             }
-        }, 50);
+        }, 50);  // Ändere die Zeit nach Bedarf
 
         setInterval(() => {
             if (this.isAboveGround()) {

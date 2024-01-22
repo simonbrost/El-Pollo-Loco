@@ -61,10 +61,21 @@ class MovableObject extends DrawableObject {
         return timepassed < 0.5;
     }
 
-    isDead() {
+    characterIsDead() {
         if (this.energy === 0) {
             setTimeout(() => {
                 gameOver();
+            }, 500);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    bossIsDead() {
+        if (this.energy === 0) {
+            setTimeout(() => {
+                youWin();
             }, 1000);
             return true;
         } else {
