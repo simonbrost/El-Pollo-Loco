@@ -51,10 +51,27 @@ class Endboss extends MovableObject {
     }
 
     animate() {
+
+        //alert animation
         setInterval(() => {
             this.playAnimation(this.IMAGES_ALERT);
         }, 200);
 
+        // movement
+        // if (!this.isHit) {
+        //     const moveLeftSpeed = 1000 / 60;
+        //     const playAnimationSpeed = 200;
+
+        //     this.moveLeftInterval = setInterval(() => {
+        //         this.moveLeft();
+        //     }, moveLeftSpeed);
+
+        //     this.playAnimationInterval = setInterval(() => {
+        //         this.playAnimation(this.IMAGES_WALKING);
+        //     }, playAnimationSpeed);
+        // }
+
+        //hurt und dead animation
         setInterval(() => {
             if (this.bossIsDead()) {
                 this.playAnimation(this.IMAGES_DYING);
@@ -64,4 +81,19 @@ class Endboss extends MovableObject {
         }, 50);
     }
 
+    //movement
+    bossWalk() {
+        if (!this.isHit) {
+            const moveLeftSpeed = 1000 / 60;
+            const playAnimationSpeed = 200;
+
+            this.moveLeftInterval = setInterval(() => {
+                this.moveLeft();
+            }, moveLeftSpeed);
+
+            this.playAnimationInterval = setInterval(() => {
+                this.playAnimation(this.IMAGES_WALKING);
+            }, playAnimationSpeed);
+        }
+    }
 }

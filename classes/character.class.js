@@ -89,19 +89,27 @@ class Character extends MovableObject {
                 this.jump();
                 this.jumping_sound.play();
             }
-            //--------------------diesen part wieder reinkommentieren für boss musik!!!!!!!!!!!!!!-------------------------->
-            // Check for boss encounter
 
-            // if (this.x >= 1520) {
-            //     // Start playing the boss encounter music if not already playing
-            //     if (this.boss_sound.paused) {
-            //         muteGame(); //nur als platzhalter. mute funktion muss noch überarbeitet werden
-            //             this.boss_sound.play(); 
-            //     }
-            // } else {
-            //     // Pause the boss encounter music if the character is not in the boss encounter area
-            //     this.boss_sound.pause();
-            // }
+            //Check for boss encounter
+
+            if (this.x >= 1420) {
+                // Start playing the boss encounter music if not already playing
+                if (this.boss_sound.paused) {
+                    muteGame(); //nur als platzhalter. mute funktion muss noch überarbeitet werden
+                    this.boss_sound.play();
+                }
+            } else {
+                // Pause the boss encounter music if the character is not in the boss encounter area
+                this.boss_sound.pause();
+            }
+
+            if (this.x >= 1720) {
+                const endboss = this.world.level.enemies.find(enemy => enemy instanceof Endboss);
+
+                if (endboss) {
+                    endboss.bossWalk();
+                }
+            }
 
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
