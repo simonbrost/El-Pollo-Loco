@@ -129,13 +129,13 @@ class Character extends MovableObject {
             if (!this.characterIsDead() && this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             }
-        }, 50);  // Ändere die Zeit nach Bedarf
+        }, 120);  // Ändere die Zeit nach Bedarf
 
         setInterval(() => {
             if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             }
-        }, 120);
+        }, 60);
 
         setInterval(() => {
             if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {

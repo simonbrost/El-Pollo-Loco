@@ -38,11 +38,13 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 5;
-        if (this.energy < 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
+        if (!this.isHurt()) {
+            this.energy -= 5;
+            if (this.energy < 0) {
+                this.energy = 0;
+            } else {
+                this.lastHit = new Date().getTime();
+            }
         }
     }
 
@@ -57,8 +59,8 @@ class MovableObject extends DrawableObject {
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; //differenz in millisekunden
-        timepassed = timepassed / 1000; // differenz in sekunden
-        return timepassed < 0.5;
+        timepassed = timepassed / 100; // differenz in sekunden
+        return timepassed < 1;
     }
 
     characterIsDead() {

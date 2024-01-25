@@ -47,28 +47,13 @@ class World {
                     enemy.enemyDies();
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1);
-                    }, 1000);
+                    }, 500);
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
                 }
             }
         });
-
-        // Kollision mit Bottles überprüfen merken falls was schief geht
-        // this.throwableObjects.forEach((bottle, bottleIndex) => {
-        //     this.level.enemies.forEach((enemy, enemyIndex) => {
-        //         if (bottle.isColliding(enemy)) {
-        //             enemy.enemyDies();
-        //             setTimeout(() => {
-        //                 this.throwableObjects.splice(bottleIndex, 1);
-        //             }, 0); // oder setTimeout ohne Verzögerung, falls das nicht notwendig ist
-        //             setTimeout(() => {
-        //                 this.level.enemies.splice(enemyIndex, 1);
-        //             }, 1000);
-        //         }
-        //     });
-        // });
 
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy) => {
