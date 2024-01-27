@@ -33,9 +33,17 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.UP && this.amountOfBottles > 0) {
+        if (this.keyboard.UP && this.amountOfBottles > 0 && this.character.canThrow) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            
+            // Nach dem Wurf Tastendruck-Spam verhindern
+            this.character.canThrow = false;
+            
+            // Nach einer Sekunde den Wurfschalter wieder aktivieren
+            setTimeout(() => {
+                this.character.canThrow = true;
+            }, 1000);
         }
     }
 

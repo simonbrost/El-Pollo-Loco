@@ -4,6 +4,7 @@ class Character extends MovableObject {
     height = 250;
     speed = 10;
     world; // das geben wir diese klasse damit man hier auch auf die variablen aus der world classe zugreifen kann wenn ich das richtig verstanden habe
+    canThrow = true;
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',

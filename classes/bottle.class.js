@@ -26,7 +26,7 @@ class Bottle extends CollectableObject {
         }
         // Hier die Statusbar aktualisieren
         world.bottleStatusbar.setPercentage(world.amountOfBottles);
-
+        console.log(world.amountOfBottles)
     }
 
 }
