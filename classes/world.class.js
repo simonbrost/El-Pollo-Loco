@@ -43,7 +43,7 @@ class World {
             // Nach einer Sekunde den Wurfschalter wieder aktivieren
             setTimeout(() => {
                 this.character.canThrow = true;
-            }, 1000);
+            }, 500);
         }
     }
 
@@ -141,31 +141,6 @@ class World {
 
         this.draw();
     }
-
-    // addToMap(mo) {
-    //     if (mo.otherDirection) {
-    //         this.flipImg(mo);
-    //     }
-
-    //     mo.draw(this.ctx);
-
-    //     if (mo.otherDirection) {
-    //         this.flipImgBack(mo);
-    //     }
-    // }
-
-    // flipImg(mo) {
-    //     this.ctx.save();
-    //     this.ctx.translate(mo.width, 0); 
-    //     this.ctx.scale(-1, 1); 
-    //     mo.x = mo.x * -1;
-    // }
-
-    // flipImgBack(mo) {
-    //     mo.x = mo.x *-1;
-    //     this.ctx.restore();
-    // }
-
 
     addToMap(mo) {
         if (mo.otherDirection) {
