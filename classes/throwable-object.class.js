@@ -20,9 +20,15 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speedY = 30;
         this.applyGravity();
+        if (world.character.direction === "right"){
         setInterval(() => {
             this.x += 10;
         }, 15);
+        } else if (world.character.direction === "left"){
+            setInterval(() => {
+                this.x -= 10;
+            }, 15);
+        }
         this.animate();
         world.amountOfBottles -= 1;
         world.bottleStatusbar.setPercentage(world.amountOfBottles);

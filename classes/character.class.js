@@ -5,6 +5,7 @@ class Character extends MovableObject {
     speed = 10;
     world; // das geben wir diese klasse damit man hier auch auf die variablen aus der world classe zugreifen kann wenn ich das richtig verstanden habe
     canThrow = true;
+    direction;
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -70,7 +71,6 @@ class Character extends MovableObject {
     }
 
     animate() {
-
         //movement
         setInterval(() => {
             this.walking_sound.pause();
@@ -78,12 +78,14 @@ class Character extends MovableObject {
                 this.moveRight();
                 this.otherDirection = false;
                 this.walking_sound.play();
+                this.direction = "right";
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
                 this.walking_sound.play();
+                this.direction = "left";
             }
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
@@ -104,7 +106,7 @@ class Character extends MovableObject {
                 this.boss_sound.pause();
             }
 
-            if (this.x >= 1720) {
+            if (this.x >= 1620) {
                 const endboss = this.world.level.enemies.find(enemy => enemy instanceof Endboss);
 
                 if (endboss) {
