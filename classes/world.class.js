@@ -59,6 +59,10 @@ class World {
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
+
+                    if (enemy instanceof Endboss) {
+                        enemy.bossAttack();
+                    }
                 }
             }
         });

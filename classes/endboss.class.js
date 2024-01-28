@@ -12,6 +12,7 @@ class Endboss extends MovableObject {
     }
 
     walkStart = false;
+    attackStart = false;
 
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -43,12 +44,26 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
+    IMAGES_ATTACKING = [
+        'img/4_enemie_boss_chicken/3_attack/G13.png',
+        'img/4_enemie_boss_chicken/3_attack/G14.png',
+        'img/4_enemie_boss_chicken/3_attack/G15.png',
+        'img/4_enemie_boss_chicken/3_attack/G16.png',
+        'img/4_enemie_boss_chicken/3_attack/G17.png',
+        'img/4_enemie_boss_chicken/3_attack/G18.png',
+        'img/4_enemie_boss_chicken/3_attack/G19.png',
+        'img/4_enemie_boss_chicken/3_attack/G20.png'
+    ];
+
+    boss_walk_sound = new Audio('audio/boss_walk.mp3')
+
     constructor() {
         super().loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DYING);
+        this.loadImages(this.IMAGES_ATTACKING);
         this.x = 2000;
         this.animate();
     }
@@ -63,8 +78,15 @@ class Endboss extends MovableObject {
         //walk animation
         setInterval(() => {
             if (this.walkStart) {
-                this.moveLeft();
+                this.chaseCharacter();
                 this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 100);
+
+        //attack animation
+        setInterval(() => {
+            if (this.attackStart) {
+                this.playAnimation(this.IMAGES_ATTACKING);
             }
         }, 100);
 
@@ -75,7 +97,7 @@ class Endboss extends MovableObject {
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             }
-        }, 50);
+        }, 100);
     }
 
     //movement
@@ -83,5 +105,29 @@ class Endboss extends MovableObject {
         if (!this.isHit) {
             this.walkStart = true;
         }
+    }
+
+    chaseCharacter() {
+        const character = world.character;
+
+
+        if (character.x < this.x) {
+            this.moveLeft();
+            this.otherDirection = false;
+            this.boss_walk_sound.play();
+        } else if (character.x > this.x) {
+            this.moveRight();
+            this.otherDirection = true;
+            this.boss_walk_sound.play();
+        }
+    }
+
+    bossAttack() {
+        this.walkStart = false;
+        this.attackStart = true;
+        setTimeout(() => {
+            this.walkStart = true;
+            this.attackStart = false;
+        }, 1000);
     }
 }
