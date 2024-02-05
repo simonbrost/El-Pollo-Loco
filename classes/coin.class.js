@@ -2,7 +2,6 @@ class Coin extends CollectableObject {
     width = 150;
     height = 150;
     y = 70;
-    coin_sound = new Audio('audio/coin.mp3');
     
     offset = {
         top: 50,
@@ -17,7 +16,7 @@ class Coin extends CollectableObject {
     }
 
     coinIsCollected() {
-        this.coin_sound.play();
+        sounds.COIN.play();
         world.amountOfCoins += 1;
         if (world.amountOfCoins < 0) {
             world.amountOfCoins = 0;

@@ -4,7 +4,6 @@ class Bottle extends CollectableObject {
     y = 330;
     speedY;
     speedX;
-    bottle_sound = new Audio('audio/bottle_pop.mp3')
 
     offset = {
         top: 10,
@@ -19,7 +18,7 @@ class Bottle extends CollectableObject {
     }
 
     bottleIsCollected() {
-        this.bottle_sound.play();
+        sounds.BOTTLE_POP.play();
         world.amountOfBottles += 1;
         if (world.amountOfBottles < 0) {
             world.amountOfBottles = 0;

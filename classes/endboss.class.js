@@ -55,8 +55,6 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/3_attack/G20.png'
     ];
 
-    boss_walk_sound = new Audio('audio/boss_walk.mp3')
-
     constructor() {
         super().loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
@@ -114,11 +112,11 @@ class Endboss extends MovableObject {
         if (character.x < this.x) {
             this.moveLeft();
             this.otherDirection = false;
-            this.boss_walk_sound.play();
+            sounds.BOSS_WALK.play();
         } else if (character.x > this.x) {
             this.moveRight();
             this.otherDirection = true;
-            this.boss_walk_sound.play();
+            sounds.BOSS_WALK.play();
         }
     }
 

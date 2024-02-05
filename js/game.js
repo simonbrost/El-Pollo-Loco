@@ -3,22 +3,13 @@ let world;
 let startScreen;
 let startButton;
 let keyboard = new Keyboard();
-music = new Audio('audio/music.mp3');
-victory = new Audio('audio/victory.mp3');
-music.volume = 0.2;
-music.loop = true;
-let mute = false;
-
-const audioElements = [
-    new Audio('audio/music.mp3'),
-    new Audio('audio/coin.mp3'),
-    new Audio('audio/bootle_thow.mp3'),
-    new Audio('audio/bottle_pop.mp3'),
-    new Audio('audio/boss_encounter.mp3'),
-    new Audio('audio/chicken.mp3'),
-    new Audio('audio/jump.mp3'),
-    new Audio('audio/running.mp3'),
-];
+let music;
+let victory;
+let muteButton;
+let muteButtonIngame;
+let muteIcon;
+let muteIconIngame;
+let mute = false;  // Initialisiere die Variable mute
 
 function init() {
     startScreen = document.getElementById('start-screen');
@@ -33,14 +24,20 @@ function init() {
 
 function startGame() {
     initLevel();
+    if (!sounds.allSounds.includes(music)) {
+        sounds.allSounds.push(music);
+    }
     if (!mute) {
-        this.music.play();
+        sounds.MUSIC.play();
     }
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     startScreen.style.display = 'none';
     muteButtonIngame.style.display = 'block';
-    
+}
+
+function muteGame() {
+    sounds.toggleMuteState();
 }
 
 function enlargeGame() {
@@ -55,26 +52,6 @@ function enlargeGame() {
         canvas.webkitRequestFullscreen();
     } else if (canvas.msRequestFullscreen) { // IE/Edge
         canvas.msRequestFullscreen();
-    }
-}
-
-function toggleMute() {
-    for (const audio of audioElements) {
-        audio.muted = !audio.muted;
-    }
-}
-
-function muteGame() {
-    mute = !mute;
-    toggleMute();
-    if (mute) {
-        music.pause();
-        muteIcon.src = 'img/11_controls/sound.png';
-        muteIconIngame.src = 'img/11_controls/sound.png';
-    } else {
-        music.play();
-        muteIcon.src = 'img/11_controls/soundON.png';
-        muteIconIngame.src = 'img/11_controls/soundON.png';
     }
 }
 
@@ -100,8 +77,8 @@ function gameOver() {
 
 function youWin() {
     showYouWinScreen();
-    music.pause();
-    this.victory.play();
+    sounds.BOSS_ENCOUNTER.pause();
+    sounds.VICTORY.play();
 }
 
 function restartGame() {

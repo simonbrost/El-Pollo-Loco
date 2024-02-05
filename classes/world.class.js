@@ -29,7 +29,6 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-            console.log(this.character.direction)
         }, 100);
     }
 

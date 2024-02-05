@@ -51,9 +51,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-56.png',
         'img/2_character_pepe/5_dead/D-57.png',
     ];
-    walking_sound = new Audio('audio/running.mp3');
-    jumping_sound = new Audio('audio/jump.mp3');
-    boss_sound = new Audio('audio/boss_encounter.mp3');
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png'); //ruft (dank der Methode "super") aus der übergeordneten Klasse die Funktion "loadImage()" auf
@@ -73,38 +70,38 @@ class Character extends MovableObject {
     animate() {
         //movement
         setInterval(() => {
-            this.walking_sound.pause();
+            sounds.RUNNING.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.walking_sound.play();
+                sounds.RUNNING.play();
                 this.direction = "right";
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
-                this.walking_sound.play();
+                sounds.RUNNING.play();
                 this.direction = "left";
             }
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
-                this.jumping_sound.play();
+                sounds.JUMP.play();
             }
 
             //Check for boss encounter
 
             if (this.x >= 1420) {
                 // Start playing the boss encounter music if not already playing
-                if (this.boss_sound.paused) {
-                    muteGame(); //nur als platzhalter. mute funktion muss noch überarbeitet werden
-                    this.boss_sound.play();
+                // if (sounds.BOSS_ENCOUNTER.paused) {
+                    sounds.MUSIC.pause();
+                    sounds.BOSS_ENCOUNTER.play();
                 }
-            } else {
-                // Pause the boss encounter music if the character is not in the boss encounter area
-                this.boss_sound.pause();
-            }
+            // } else {
+            //     // Pause the boss encounter music if the character is not in the boss encounter area
+            //     sounds.BOSS_ENCOUNTER.pause();
+            // }
 
             if (this.x >= 1620) {
                 const endboss = this.world.level.enemies.find(enemy => enemy instanceof Endboss);
