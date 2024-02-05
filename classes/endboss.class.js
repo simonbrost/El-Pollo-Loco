@@ -108,7 +108,6 @@ class Endboss extends MovableObject {
     chaseCharacter() {
         const character = world.character;
 
-
         if (character.x < this.x) {
             this.moveLeft();
             this.otherDirection = false;

@@ -77,7 +77,8 @@ function gameOver() {
 
 function youWin() {
     showYouWinScreen();
-    sounds.BOSS_ENCOUNTER.pause();
+    sounds.BOSS_ENCOUNTER.volume = 0;
+    sounds.BOSS_WALK.volume = 0;
     sounds.VICTORY.play();
 }
 
