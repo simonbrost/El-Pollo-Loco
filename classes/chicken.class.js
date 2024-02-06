@@ -48,5 +48,6 @@ class Chicken extends MovableObject {
         clearInterval(this.moveLeftInterval);
         clearInterval(this.playAnimationInterval);
         this.isHit = true;
+        sounds.CHICKEN.play();
     }
 }

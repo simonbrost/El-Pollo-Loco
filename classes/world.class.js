@@ -72,6 +72,7 @@ class World {
                 if (bottle.isColliding(enemy)) {
                     enemy.bottleHit();
                     this.throwableObjects.splice(bottleIndex, 1);
+                    sounds.BOTTLE_THROW.play();
                 }
             });
         });

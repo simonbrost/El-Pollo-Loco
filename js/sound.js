@@ -6,6 +6,7 @@ const sounds = {
     BOSS_ENCOUNTER: new Audio('audio/boss_encounter.mp3'),
     BOSS_WALK: new Audio('audio/boss_walk.mp3'),
     BOTTLE_POP: new Audio('audio/bottle_pop.mp3'),
+    BOTTLE_THROW: new Audio('audio/bottle_throw.mp3'),
     MUSIC: new Audio('audio/music.mp3'),
     VICTORY: new Audio('audio/victory.mp3'),
   
