@@ -57,6 +57,7 @@ function enlargeGame() {
 
 function showGameOverScreen() {
     gameOverScreen.style.display = 'block';
+    canvas.style.display = 'none';
 }
 
 function hideGameOverScreen() {
@@ -65,6 +66,8 @@ function hideGameOverScreen() {
 
 function showYouWinScreen() {
     youWinScreen.style.display = 'block';
+    canvas.style.display = 'none';
+    gameOverScreen.style.display = 'none';
 }
 
 function hideYouWinScreen() {
