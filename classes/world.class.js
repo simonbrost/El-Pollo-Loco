@@ -52,10 +52,14 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.speedY < 0 && this.character.isAboveGround()) {
                     this.character.jump();
-                    enemy.enemyDies();
-                    setTimeout(() => {
-                        this.level.enemies.splice(index, 1);
-                    }, 500);
+                    if (enemy instanceof Endboss) {
+                        enemy.hit(); // Endboss wird getroffen, aber nicht sofort sterben
+                    } else {
+                        enemy.enemyDies(); // Normale Gegner sterben sofort
+                        setTimeout(() => {
+                            this.level.enemies.splice(index, 1);
+                        }, 500);
+                    }
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
