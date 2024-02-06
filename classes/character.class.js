@@ -93,17 +93,11 @@ class Character extends MovableObject {
             //Check for boss encounter
 
             if (this.x >= 1420) {
-                // Start playing the boss encounter music if not already playing
-                // if (sounds.BOSS_ENCOUNTER.paused) {
                     sounds.MUSIC.pause();
                     sounds.BOSS_ENCOUNTER.play();
                 }
-            // } else {
-            //     // Pause the boss encounter music if the character is not in the boss encounter area
-            //     sounds.BOSS_ENCOUNTER.pause();
-            // }
 
-            if (this.x >= 1620) {
+            if (this.x >= 1520) {
                 const endboss = this.world.level.enemies.find(enemy => enemy instanceof Endboss);
 
                 if (endboss) {
