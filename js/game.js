@@ -20,6 +20,7 @@ function init() {
     muteButtonIngame = document.getElementById('mute-button-ingame');
     muteIcon = document.getElementById('mute-icon');
     muteIconIngame = document.getElementById('mute-icon-ingame');
+    checkOrientation();
 }
 
 function startGame() {
@@ -34,6 +35,7 @@ function startGame() {
     world = new World(canvas, keyboard);
     startScreen.style.display = 'none';
     muteButtonIngame.style.display = 'block';
+    checkOrientation();
 }
 
 function muteGame() {
@@ -125,4 +127,26 @@ document.addEventListener('keydown', function (e) {
     if (e.code === 'Space') {
         e.preventDefault();
     }
+});
+
+// Function to check screen orientation
+function checkOrientation() {
+    let orientationMessage = document.getElementById('orientationMessage');
+    if (orientationMessage) {
+        if (window.innerWidth > window.innerHeight) {
+            // Landscape orientation
+            orientationMessage.style.display = 'none';
+        } else {
+            // Portrait orientation
+            orientationMessage.style.display = 'block';
+        }
+    }
+}
+
+// Check orientation initially
+checkOrientation();
+
+// Listen for orientation change
+window.addEventListener('orientationchange', function () {
+    checkOrientation();
 });
