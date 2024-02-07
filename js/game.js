@@ -30,6 +30,7 @@ function startGame() {
     }
     if (!mute) {
         sounds.MUSIC.play();
+        sounds.MUSIC.loop = true;
     }
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
