@@ -213,6 +213,36 @@ h1 {
     background-color: rgb(255, 222, 0);
 }
 
+#hud {
+    position: absolute;
+    bottom: 5px;
+    width: 70vw;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+
+.panel {
+    display: flex;
+    gap: 20px;
+}
+
+.mobile-hud-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 176, 0);
+    border: 2px solid black;
+    border-radius: 20%;
+}
+
+.mobile-hud-button img{
+    height: 30px;
+    width: 30px;
+}
+
+
 /*ORIENTATION MESSAGE*/
 #orientationMessage {
     display: none;
@@ -235,6 +265,10 @@ h1 {
         width: 100%;
     }
 
+    #hud {
+        display: flex;
+    }
+
     h1 {
         display: none;
     }
@@ -251,6 +285,7 @@ h1 {
 
     #start-screen {
         margin: 0;
+        height: 100%;
         width: 100%;
         background-position: center center;
         background-size: cover;

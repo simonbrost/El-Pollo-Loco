@@ -130,6 +130,39 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+// Touch-Event-Handler for mobile controls
+document.getElementById('mobile-left').addEventListener('touchstart', () => {
+    keyboard.LEFT = true;
+});
+
+document.getElementById('mobile-left').addEventListener('touchend', () => {
+    keyboard.LEFT = false;
+});
+
+document.getElementById('mobile-right').addEventListener('touchstart', () => {
+    keyboard.RIGHT = true;
+});
+
+document.getElementById('mobile-right').addEventListener('touchend', () => {
+    keyboard.RIGHT = false;
+});
+
+document.getElementById('mobile-jump').addEventListener('touchstart', () => {
+    keyboard.SPACE = true;
+});
+
+document.getElementById('mobile-jump').addEventListener('touchend', () => {
+    keyboard.SPACE = false;
+});
+
+document.getElementById('mobile-throw').addEventListener('touchstart', () => {
+    keyboard.UP = true;
+});
+
+document.getElementById('mobile-throw').addEventListener('touchend', () => {
+    keyboard.UP = false;
+});
+
 // Function to check screen orientation
 function checkOrientation() {
     let orientationMessage = document.getElementById('orientationMessage');
