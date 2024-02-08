@@ -1,5 +1,6 @@
 class World {
     character = new Character();
+    boss = new Endboss(); // Hier instanziere ich den Boss direkt in der World-Klasse
     level = level1;
     canvas;
     ctx;
@@ -8,6 +9,7 @@ class World {
     statusBar = new Statusbar();
     bottleStatusbar = new BottleStatusbar();
     coinStatusbar = new CoinStatusbar();
+    bossStatusbar = new BossStatusbar();
     throwableObjects = [];
     amountOfCoins = 0;
     amountOfBottles = 0;
@@ -18,11 +20,20 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.addBossToEnemies(); // Fügen Sie den Boss zu den Feinden hinzu, bevor das Spiel läuft
         this.run();
+        this.bossStatusbar.setXCoordinate(this.boss.x); // Setze die x-Koordinate der BossStatusbar auf die x-Koordinate des Endbosses
     }
 
     setWorld() {
         this.character.world = this;
+        this.boss.world = this;
+    }
+
+    addBossToEnemies() {
+        if (!(this.level.enemies.includes(this.boss))) {
+            this.level.enemies.push(this.boss);
+        }
     }
 
     run() {
@@ -36,10 +47,10 @@ class World {
         if (this.keyboard.UP && this.amountOfBottles > 0 && this.character.canThrow) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
-            
+
             // Nach dem Wurf Tastendruck-Spam verhindern
             this.character.canThrow = false;
-            
+
             // Nach einer Sekunde den Wurfschalter wieder aktivieren
             setTimeout(() => {
                 this.character.canThrow = true;
@@ -48,38 +59,62 @@ class World {
     }
 
     checkCollisions() {
+        // Überprüfe Kollisionen mit normalen Gegnern
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
                 if (this.character.speedY < 0 && this.character.isAboveGround()) {
                     this.character.jump();
-                    if (enemy instanceof Endboss) {
-                        enemy.hit(); // Endboss wird getroffen, aber nicht sofort sterben
-                    } else {
-                        enemy.enemyDies(); // Normale Gegner sterben sofort
-                        setTimeout(() => {
-                            this.level.enemies.splice(index, 1);
-                        }, 500);
-                    }
+                    enemy.enemyDies(); // Normale Gegner sterben sofort
+                    setTimeout(() => {
+                        this.level.enemies.splice(index, 1);
+                    }, 500);
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
-
-                    if (enemy instanceof Endboss) {
-                        enemy.bossAttack();
-                    }
                 }
             }
         });
 
+        // Überprüfe Kollisionen mit dem Endboss
+        if (this.character.isColliding(this.boss)) {
+            if (this.character.speedY < 0 && this.character.isAboveGround()) {
+                this.character.jump();
+                // Behandele den Fall, wenn der Character auf den Boss springt
+                this.boss.hit(); // Hier könnte eine Methode hinzugefügt werden, um den Boss zu treffen
+            } else {
+                // Behandele den Fall, wenn der Character den Boss trifft
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+                this.boss.bossAttack(); // Lasse den Boss angreifen, wenn er getroffen wird
+            }
+        }
+
         this.throwableObjects.forEach((bottle, bottleIndex) => {
-            this.level.enemies.forEach((enemy) => {
-                if (bottle.isColliding(enemy)) {
-                    enemy.bottleHit();
-                    this.throwableObjects.splice(bottleIndex, 1);
-                    sounds.BOTTLE_THROW.play();
-                }
-            });
+            // Überprüfen, ob die Flasche bereits mit dem Boss kollidiert ist
+            if (!bottle.hasCollidedWithBoss) {
+                this.level.enemies.forEach((enemy) => {
+                    if (bottle.isColliding(enemy)) {
+                        enemy.bottleHit();
+                        this.bossStatusbar.setPercentage(this.boss.energy);
+                        bottle.hasCollidedWithBoss = true; // Setze den Status der Flasche auf "kollidiert mit Boss"
+                        sounds.BOTTLE_THROW.play();
+                        
+                        // Stoppe die Rotation der Flasche
+                        clearInterval(bottle.throwInterval);
+                        
+                        // Starte die Splash-Animation nachdem die Flasche ihre Bewegung beendet hat
+                        setTimeout(() => {
+                            bottle.splash();
+                            // Entferne die Flasche nach der Splash-Animation
+                            setTimeout(() => {
+                                this.throwableObjects.splice(bottleIndex, 1);
+                            }, 1000);
+                        }, 100);
+                    }
+                });
+            }
         });
+        
 
 
 
@@ -104,23 +139,33 @@ class World {
         //sonst würde jeder neue Frame einfach dazukommen
 
         this.ctx.translate(this.camera_x, 0); //der context verschiebt (translate) sich um unsere variable (camera_x) also -100
+
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0); //damit statusbar mitwandert context nochmal zurückverschieben...
+
         //--------------------space for fixed content----------------------------
         this.addToMap(this.statusBar);
         this.addToMap(this.bottleStatusbar);
         this.addToMap(this.coinStatusbar);
         //-----------------------------------------------------------------------
+
         this.ctx.translate(this.camera_x, 0);   // ...und wieder vor
 
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableObjects);
 
         this.addToMap(this.character);
+        this.addToMap(this.boss);
+
+        this.addObjectsToMap(this.throwableObjects);
+
+        // Aktualisiere die x-Koordinate der BossStatusbar entsprechend der x-Koordinate des Bosses
+        this.bossStatusbar.setXCoordinate(this.boss.x);
+        this.addToMap(this.bossStatusbar);
+        //-----------------------------------------------------------------------
 
         this.ctx.translate(-this.camera_x, 0); // und dann verschieben wir es wieder zurück
 
