@@ -76,6 +76,7 @@ class MovableObject extends DrawableObject {
 
     bossIsDead() {
         if (this.energy === 0) {
+            this.world.boss.walkStart = false;
             setTimeout(() => {
                 youWin();
             }, 1000);

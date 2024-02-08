@@ -2,7 +2,7 @@ class Endboss extends MovableObject {
     height = 500;
     width = 300;
     y = -35;
-    speed = 5;
+    speed = 10;
 
     offset = {
         top: 80,
@@ -62,18 +62,16 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DYING);
         this.loadImages(this.IMAGES_ATTACKING);
-        this.x = 2000;
+        this.x = 4000;
         this.animate();
     }
 
     animate() {
 
-        //alert animation
         setInterval(() => {
             this.playAnimation(this.IMAGES_ALERT);
         }, 200);
 
-        //walk animation
         setInterval(() => {
             if (this.walkStart) {
                 this.chaseCharacter();
@@ -81,24 +79,25 @@ class Endboss extends MovableObject {
             }
         }, 100);
 
-        //attack animation
         setInterval(() => {
             if (this.attackStart) {
                 this.playAnimation(this.IMAGES_ATTACKING);
             }
         }, 100);
 
-        //hurt and dead animation
         setInterval(() => {
             if (this.bossIsDead()) {
                 this.playAnimation(this.IMAGES_DYING);
-            } else if (this.isHurt()) {
+            }
+        }, 150);
+
+        setInterval(() => {
+           if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             }
         }, 100);
     }
 
-    //movement
     bossWalk() {
         if (!this.isHit) {
             this.walkStart = true;

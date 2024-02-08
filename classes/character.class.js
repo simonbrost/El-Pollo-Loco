@@ -92,12 +92,12 @@ class Character extends MovableObject {
 
             //Check for boss encounter
 
-            if (this.x >= 1420) {
+            if (this.x >= 3500) {
                     sounds.MUSIC.pause();
                     sounds.BOSS_ENCOUNTER.play();
                 }
 
-            if (this.x >= 1520) {
+            if (this.x >= 3550) {
                 const endboss = this.world.level.enemies.find(enemy => enemy instanceof Endboss);
 
                 if (endboss) {

@@ -59,7 +59,7 @@ class World {
     }
 
     checkCollisions() {
-        // Überprüfe Kollisionen mit normalen Gegnern
+        // Überprüfe Kollisionen von Character mit normalen Gegnern
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
                 if (this.character.speedY < 0 && this.character.isAboveGround()) {
@@ -75,12 +75,13 @@ class World {
             }
         });
 
-        // Überprüfe Kollisionen mit dem Endboss
+        // Überprüfe Kollisionen von Character mit dem Endboss
         if (this.character.isColliding(this.boss)) {
             if (this.character.speedY < 0 && this.character.isAboveGround()) {
                 this.character.jump();
                 // Behandele den Fall, wenn der Character auf den Boss springt
                 this.boss.hit(); // Hier könnte eine Methode hinzugefügt werden, um den Boss zu treffen
+                this.bossStatusbar.setPercentage(this.boss.energy);
             } else {
                 // Behandele den Fall, wenn der Character den Boss trifft
                 this.character.hit();
@@ -89,32 +90,50 @@ class World {
             }
         }
 
+        // Kollisionen von Flasche mit Hühnchen und dem Boss
         this.throwableObjects.forEach((bottle, bottleIndex) => {
-            // Überprüfen, ob die Flasche bereits mit dem Boss kollidiert ist
-            if (!bottle.hasCollidedWithBoss) {
-                this.level.enemies.forEach((enemy) => {
-                    if (bottle.isColliding(enemy)) {
-                        enemy.bottleHit();
-                        this.bossStatusbar.setPercentage(this.boss.energy);
-                        bottle.hasCollidedWithBoss = true; // Setze den Status der Flasche auf "kollidiert mit Boss"
-                        sounds.BOTTLE_THROW.play();
-                        
-                        // Stoppe die Rotation der Flasche
+            let hitEnemy = false; // Flag, um zu überprüfen, ob die Flasche bereits mit einem Feind kollidiert ist
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if (!hitEnemy) { // Überprüfe nur Kollision, wenn die Flasche noch nicht mit einem Feind kollidiert ist
+                    if (enemy instanceof Chicken && !enemy.isHit && bottle.isColliding(enemy) && !bottle.hasHitChicken) {
+                        enemy.enemyDies();
+                        bottle.hasHitChicken = true; // Markiere, dass die Flasche ein Huhn getroffen hat
                         clearInterval(bottle.throwInterval);
-                        
-                        // Starte die Splash-Animation nachdem die Flasche ihre Bewegung beendet hat
+                        bottle.speedX = 0; // Stoppe die horizontale Bewegung der Flasche nach der Kollision
+                        bottle.speedY = 0; // Stoppe die vertikale Bewegung der Flasche nach der Kollision
+                        bottle.x -= bottle.speedX; // Korrigiere die x-Koordinate basierend auf der letzten Geschwindigkeit
+                        bottle.y -= bottle.speedY; // Korrigiere die y-Koordinate basierend auf der letzten Geschwindigkeit
                         setTimeout(() => {
                             bottle.splash();
-                            // Entferne die Flasche nach der Splash-Animation
                             setTimeout(() => {
                                 this.throwableObjects.splice(bottleIndex, 1);
                             }, 1000);
                         }, 100);
+                        setTimeout(() => {
+                            this.level.enemies.splice(enemyIndex, 1);
+                        }, 500);
+                        hitEnemy = true; // Setze die Flag, um zu verhindern, dass die Flasche andere Feinde trifft
                     }
-                });
-            }
+                    if (enemy instanceof Endboss && !bottle.hasCollidedWithBoss && bottle.isColliding(enemy)) {
+                        enemy.bottleHit();
+                        this.bossStatusbar.setPercentage(this.boss.energy);
+                        bottle.hasCollidedWithBoss = true;
+                        clearInterval(bottle.throwInterval);
+                        bottle.speedX = 0; // Stoppe die horizontale Bewegung der Flasche nach der Kollision
+                        bottle.speedY = 0; // Stoppe die vertikale Bewegung der Flasche nach der Kollision
+                        bottle.x -= bottle.speedX; // Korrigiere die x-Koordinate basierend auf der letzten Geschwindigkeit
+                        bottle.y -= bottle.speedY; // Korrigiere die y-Koordinate basierend auf der letzten Geschwindigkeit
+                        setTimeout(() => {
+                            bottle.splash();
+                            setTimeout(() => {
+                                this.throwableObjects.splice(bottleIndex, 1);
+                            }, 1000);
+                        }, 100);
+                        hitEnemy = true; // Setze die Flag, um zu verhindern, dass die Flasche andere Feinde trifft
+                    }
+                }
+            });
         });
-        
 
 
 

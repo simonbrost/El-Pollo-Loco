@@ -28,17 +28,20 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        this.speedY = 30;
+        this.speedY = 25; // Vertikale Geschwindigkeit
+        this.speedX = 4; // Horizontale Geschwindigkeit
         this.applyGravity();
+    
         if (world.character.direction === "right") {
             this.throwInterval = setInterval(() => {
-                this.x += 10;
+                this.x += this.speedX; // Veränderung der x-Koordinate basierend auf der horizontalen Geschwindigkeit
             }, 15);
         } else if (world.character.direction === "left") {
             this.throwInterval = setInterval(() => {
-                this.x -= 10;
+                this.x -= this.speedX; // Veränderung der x-Koordinate basierend auf der horizontalen Geschwindigkeit
             }, 15);
         }
+
         this.animate();
         world.amountOfBottles -= 1;
         world.bottleStatusbar.setPercentage(world.amountOfBottles);
@@ -52,6 +55,7 @@ class ThrowableObject extends MovableObject {
     }
 
     splash() {
+        sounds.BOTTLE_THROW.play();
         setInterval(() => {
             this.playAnimation(this.IMAGES_SPLASH);
         }, 100);

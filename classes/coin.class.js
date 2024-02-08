@@ -12,7 +12,7 @@ class Coin extends DrawableObject {
 
     constructor(world) {
         super(world).loadImage('img/8_coin/coin_1.png')
-        this.x = 400 + Math.random() * 400;
+        this.x = 800 + Math.random() * 2000;
     }
 
     coinIsCollected() {
