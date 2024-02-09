@@ -292,6 +292,9 @@ h1 {
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
+    #start-screen button {
+        margin: 5px;
+    }
     #you-win-screen {
         margin: 0;
         top: 0;
