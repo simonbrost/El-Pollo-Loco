@@ -8,6 +8,7 @@ const sounds = {
     BOTTLE_POP: new Audio('audio/bottle_pop.mp3'),
     BOTTLE_THROW: new Audio('audio/bottle_throw.mp3'),
     MUSIC: new Audio('audio/music.mp3'),
+    GAMEOVER: new Audio('audio/gameover.mp3'),
     VICTORY: new Audio('audio/victory.mp3'),
   
     allSounds: [],

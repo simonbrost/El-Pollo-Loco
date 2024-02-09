@@ -79,6 +79,8 @@ function hideYouWinScreen() {
 
 function gameOver() {
     showGameOverScreen();
+    sounds.MUSIC.pause();
+    sounds.GAMEOVER.play();
 }
 
 function youWin() {
