@@ -20,11 +20,7 @@ class Bottle extends DrawableObject {
     bottleIsCollected() {
         sounds.BOTTLE_POP.play();
         world.amountOfBottles += 1;
-        if (world.amountOfBottles < 0) {
-            world.amountOfBottles = 0;
-        }
-        // Hier die Statusbar aktualisieren
+        if (world.amountOfBottles < 0) world.amountOfBottles = 0;
         world.bottleStatusbar.setPercentage(world.amountOfBottles);
     }
-
 }

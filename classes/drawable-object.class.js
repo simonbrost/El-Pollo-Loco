@@ -15,7 +15,7 @@ class DrawableObject {
     }
 
     loadImage(path) {
-        this.img = new Image(); //this.img = document.getElement.Id('image') <img id="image" src=...>
+        this.img = new Image();
         this.img.src = path
     }
 

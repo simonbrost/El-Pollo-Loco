@@ -41,5 +41,4 @@ const sounds = {
     
 };
 
-// Initialisiere die Sounds
 sounds.initialize();

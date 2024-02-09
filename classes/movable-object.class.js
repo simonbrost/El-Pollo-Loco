@@ -40,21 +40,15 @@ class MovableObject extends DrawableObject {
     hit() {
         if (!this.isHurt()) {
             this.energy -= 5;
-            if (this.energy < 0) {
-                this.energy = 0;
-            } else {
-                this.lastHit = new Date().getTime();
-            }
+            if (this.energy < 0) this.energy = 0;
+            else this.lastHit = new Date().getTime();
         }
     }
 
     bottleHit() {
         this.energy -= 20;
-        if (this.energy < 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
-        }
+        if (this.energy < 0) this.energy = 0; 
+        else this.lastHit = new Date().getTime();
     }
 
     isHurt() {
@@ -65,9 +59,7 @@ class MovableObject extends DrawableObject {
 
     characterIsDead() {
         if (this.energy === 0) {
-            setTimeout(() => {
-                gameOver();
-            }, 500);
+            setTimeout(() => gameOver(), 500);
             return true;
         } else {
             return false;
@@ -77,9 +69,7 @@ class MovableObject extends DrawableObject {
     bossIsDead() {
         if (this.energy === 0) {
             this.world.boss.walkStart = false;
-            setTimeout(() => {
-                youWin();
-            }, 1000);
+            setTimeout(() => youWin(), 1000);
             return true;
         } else {
             return false;

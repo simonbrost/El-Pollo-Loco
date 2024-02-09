@@ -67,35 +67,56 @@ class Endboss extends MovableObject {
     }
 
     animate() {
+        const alertInterval = 200;
+        const walkingInterval = 100;
+        const attackingInterval = 100;
+        const dyingInterval = 150;
+        const hurtInterval = 100;
 
+        this.playAlert(alertInterval);
+        this.playWalk(walkingInterval);
+        this.playAttack(attackingInterval);
+        this.playDying(dyingInterval);
+        this.playHurt(hurtInterval);
+    }
+
+    playAlert(interval) {
         setInterval(() => {
             this.playAnimation(this.IMAGES_ALERT);
-        }, 200);
+        }, interval);
+    }
 
+    playWalk(interval) {
         setInterval(() => {
             if (this.walkStart) {
                 this.chaseCharacter();
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 100);
+        }, interval);
+    }
 
+    playAttack(interval) {
         setInterval(() => {
             if (this.attackStart) {
                 this.playAnimation(this.IMAGES_ATTACKING);
             }
-        }, 100);
+        }, interval);
+    }
 
+    playDying(interval) {
         setInterval(() => {
             if (this.bossIsDead()) {
                 this.playAnimation(this.IMAGES_DYING);
             }
-        }, 150);
+        }, interval);
+    }
 
+    playHurt(interval) {
         setInterval(() => {
-           if (this.isHurt()) {
+            if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             }
-        }, 100);
+        }, interval);
     }
 
     bossWalk() {
@@ -106,7 +127,6 @@ class Endboss extends MovableObject {
 
     chaseCharacter() {
         const character = world.character;
-
         if (character.x < this.x) {
             this.moveLeft();
             this.otherDirection = false;

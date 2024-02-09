@@ -18,13 +18,7 @@ class Coin extends DrawableObject {
     coinIsCollected() {
         sounds.COIN.play();
         world.amountOfCoins += 1;
-        if (world.amountOfCoins < 0) {
-            world.amountOfCoins = 0;
-        }
-        // Hier die Statusbar aktualisieren
+        if (world.amountOfCoins < 0) world.amountOfCoins = 0;
         world.coinStatusbar.setPercentage(world.amountOfCoins);
-
-
     }
-
 }

@@ -28,19 +28,12 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        this.speedY = 25; // Vertikale Geschwindigkeit
-        this.speedX = 4; // Horizontale Geschwindigkeit
+        this.speedY = 25;
+        this.speedX = 4;
         this.applyGravity();
-    
-        if (world.character.direction === "right") {
-            this.throwInterval = setInterval(() => {
-                this.x += this.speedX; // Veränderung der x-Koordinate basierend auf der horizontalen Geschwindigkeit
-            }, 15);
-        } else if (world.character.direction === "left") {
-            this.throwInterval = setInterval(() => {
-                this.x -= this.speedX; // Veränderung der x-Koordinate basierend auf der horizontalen Geschwindigkeit
-            }, 15);
-        }
+
+        if (world.character.direction === "right") this.throwInterval = setInterval(() => this.x += this.speedX, 15);
+        else if (world.character.direction === "left") this.throwInterval = setInterval(() => this.x -= this.speedX, 15);
 
         this.animate();
         world.amountOfBottles -= 1;
@@ -49,15 +42,11 @@ class ThrowableObject extends MovableObject {
 
 
     animate() {
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_THROW);
-        }, 100);
+        setInterval(() => this.playAnimation(this.IMAGES_THROW), 100);
     }
 
     splash() {
         sounds.BOTTLE_THROW.play();
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_SPLASH);
-        }, 100);
+        setInterval(() => this.playAnimation(this.IMAGES_SPLASH), 100);
     }
 }

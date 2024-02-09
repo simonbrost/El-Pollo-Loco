@@ -68,74 +68,114 @@ class Character extends MovableObject {
     }
 
     animate() {
-        //movement
-        setInterval(() => {
-            sounds.RUNNING.pause();
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                sounds.RUNNING.play();
-                this.direction = "right";
-            }
+        setInterval(() => this.moveCharacter(), 1000 / 60);
+        this.animateCharacter();
+    }
 
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                sounds.RUNNING.play();
-                this.direction = "left";
-            }
+    moveCharacter() {
+        sounds.RUNNING.pause();
+        if (this.canMoveRight())
+            this.moveRight();
+        if (this.canMoveLeft())
+            this.moveLeft();
+        if (this.canJump())
+            this.jump();
+        this.checkForBossEncounter();
+        this.world.camera_x = -this.x + 100;
+    }
 
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-                sounds.JUMP.play();
-            }
+    canMoveRight() {
+        return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x
+    }
 
-            //Check for boss encounter
+    moveRight() {
+        super.moveRight();
+        this.otherDirection = false;
+        sounds.RUNNING.play();
+        this.direction = "right";
+    }
 
-            if (this.x >= 3500) {
-                    sounds.MUSIC.pause();
-                    sounds.BOSS_ENCOUNTER.play();
-                }
+    canMoveLeft() {
+        return this.world.keyboard.LEFT && this.x > 0
+    }
 
-            if (this.x >= 3550) {
-                const endboss = this.world.level.enemies.find(enemy => enemy instanceof Endboss);
+    moveLeft() {
+        super.moveLeft();
+        this.otherDirection = true;
+        sounds.RUNNING.play();
+        this.direction = "left";
+    }
 
-                if (endboss) {
-                    endboss.bossWalk();
-                }
-            }
+    canJump() {
+        return this.world.keyboard.SPACE && !this.isAboveGround()
+    }
 
-            this.world.camera_x = -this.x + 100;
-        }, 1000 / 60);
+    jump() {
+        super.jump();
+        sounds.JUMP.play();
+    }
 
-        //animationen
+    checkForBossEncounter() {
+        if (this.x >= 3500) {
+            sounds.MUSIC.pause();
+            sounds.BOSS_ENCOUNTER.play();
+        };
+
+        if (this.x >= 3550) {
+            const endboss = this.world.level.enemies.find(enemy => enemy instanceof Endboss);
+            if (endboss) endboss.bossWalk();
+        };
+    }
+
+    animateCharacter() {
+        const idleInterval = 400;
+        const dyingInterval = 80;
+        const hurtInterval = 120;
+        const jumpingInterval = 90;
+        const walkingInterval = 50;
+
+        this.playIdle(idleInterval);
+        this.playDying(dyingInterval);
+        this.playHurt(hurtInterval);
+        this.playJumping(jumpingInterval);
+        this.playWalking(walkingInterval);
+    }
+
+    playIdle(idleInterval) {
         setInterval(() => {
             this.playAnimation(this.IMAGES_IDLE);
-        }, 400);
+        }, idleInterval);
+    }
 
+    playDying(dyingInterval) {
         setInterval(() => {
             if (this.characterIsDead()) {
                 this.playAnimation(this.IMAGES_DYING);
             }
-        }, 80);  // Ändere die Zeit nach Bedarf
+        }, dyingInterval);
+    }
 
+    playHurt(hurtInterval) {
         setInterval(() => {
             if (!this.characterIsDead() && this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             }
-        }, 120);  // Ändere die Zeit nach Bedarf
+        }, hurtInterval);
+    }
 
+    playJumping(jumpingInterval) {
         setInterval(() => {
             if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             }
-        }, 90);
+        }, jumpingInterval);
+    }
 
+    playWalking(walkingInterval) {
         setInterval(() => {
             if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 50);
-
+        }, walkingInterval);
     }
 }

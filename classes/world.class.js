@@ -69,9 +69,7 @@ class World {
                 if (this.character.speedY < 0 && this.character.isAboveGround()) {
                     this.character.jump();
                     enemy.enemyDies();
-                    setTimeout(() => {
-                        this.level.enemies.splice(index, 1);
-                    }, 500);
+                    setTimeout(() => this.level.enemies.splice(index, 1), 500);
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
@@ -158,22 +156,16 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.ctx.translate(this.camera_x, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
-
         this.ctx.translate(-this.camera_x, 0);
-
         //--------------------space for fixed content----------------------------
         this.addToMap(this.statusBar);
         this.addToMap(this.bottleStatusbar);
         this.addToMap(this.coinStatusbar);
         //-----------------------------------------------------------------------
-
         this.ctx.translate(this.camera_x, 0);
-
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
@@ -182,7 +174,6 @@ class World {
         this.addObjectsToMap(this.throwableObjects);
         this.bossStatusbar.setXCoordinate(this.boss.x);
         this.addToMap(this.bossStatusbar);
-
         this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
