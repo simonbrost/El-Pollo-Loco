@@ -122,7 +122,6 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-// Touch-Event-Handler for mobile controls
 document.getElementById('mobile-left').addEventListener('touchstart', () => {
     keyboard.LEFT = true;
 });
