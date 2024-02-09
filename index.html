@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>El Pollo Loco</title>
-    <link rel="icon" type="image/x-icon" href="/img/6_salsa_bottle/salsa_bottle.png">
+    <link rel="icon" type="image/x-icon" href="img/12_assets/favicon.png">
 
     <script src="classes/drawable-object.class.js"></script>
     <script src="classes/movable-object.class.js"></script>
@@ -40,7 +40,7 @@
         <button id="fullscreen-button" onclick="enlargeGame()">
             <img src="img/11_controls/fullscreen.png" alt="fullscreen">
         </button>
-        <button id="mute-button" onclick="muteGame()">
+        <button id="mute-button" onclick="sounds.toggleMuteState()">
             <img id="mute-icon" src="img/11_controls/mute.png" alt="Lautsprecher">
         </button>
     </div>
@@ -56,7 +56,7 @@
         <button id="restart-button" onclick="restartGame()">back to menu</button>
     </div>
 
-    <button id="mute-button-ingame" onclick="muteGame()" style="display: none;">
+    <button id="mute-button-ingame" onclick="sounds.toggleMuteState()" style="display: none;">
         <img id="mute-icon-ingame" src="img/11_controls/mute.png" alt="Lautsprecher">
     </button>
 

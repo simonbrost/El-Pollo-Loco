@@ -20,27 +20,17 @@ function init() {
     muteButtonIngame = document.getElementById('mute-button-ingame');
     muteIcon = document.getElementById('mute-icon');
     muteIconIngame = document.getElementById('mute-icon-ingame');
-    checkOrientation();
 }
 
 function startGame() {
+    sounds.initialize();
+    sounds.MUSIC.play();
+    sounds.MUSIC.loop = true;
     initLevel();
-    if (!sounds.allSounds.includes(music)) {
-        sounds.allSounds.push(music);
-    }
-    if (!mute) {
-        sounds.MUSIC.play();
-        sounds.MUSIC.loop = true;
-    }
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     startScreen.style.display = 'none';
     muteButtonIngame.style.display = 'block';
-    checkOrientation();
-}
-
-function muteGame() {
-    sounds.toggleMuteState();
 }
 
 function enlargeGame() {
@@ -156,24 +146,4 @@ document.getElementById('mobile-throw').addEventListener('touchstart', () => {
 });
 document.getElementById('mobile-throw').addEventListener('touchend', () => {
     keyboard.UP = false;
-});
-
-// Function to check screen orientation
-function checkOrientation() {
-    let orientationMessage = document.getElementById('orientationMessage');
-    if (orientationMessage) {
-        if (window.innerWidth > window.innerHeight) {
-            // Landscape orientation
-            orientationMessage.style.display = 'none';
-        } else {
-            // Portrait orientation
-            orientationMessage.style.display = 'block';
-        }
-    }
-}
-
-checkOrientation();
-
-window.addEventListener('orientationchange', function () {
-    checkOrientation();
 });

@@ -41,5 +41,3 @@ const sounds = {
     }
     
 };
-
-sounds.initialize();

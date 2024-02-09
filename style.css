@@ -237,7 +237,7 @@ h1 {
     border-radius: 20%;
 }
 
-.mobile-hud-button img{
+.mobile-hud-button img {
     height: 30px;
     width: 30px;
 }
@@ -254,13 +254,21 @@ h1 {
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     text-align: center;
-    padding-top: 50vh; /* Vertical centering */
+    font-size: 50px;
+    padding-top: 50vh;
+    /* Vertical centering */
     z-index: 9999;
 }
 
+@media (max-width:600px) {
+    #orientationMessage {
+        display: block;
+    }
+}
 
 /*MOBILE WIDTH*/
 @media (max-width:720px) {
+
     canvas {
         width: 100%;
     }
@@ -292,9 +300,11 @@ h1 {
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
+
     #start-screen button {
         margin: 5px;
     }
+
     #you-win-screen {
         margin: 0;
         top: 0;
@@ -304,9 +314,11 @@ h1 {
         background-position: center center;
         text-align: center;
     }
-    #you-win-screen button{
+
+    #you-win-screen button {
         top: 10vh;
     }
+
     #game-over-screen {
         margin: 0;
         top: 0;
@@ -316,7 +328,8 @@ h1 {
         background-position: center center;
         text-align: center;
     }
-    #game-over-screen button{
+
+    #game-over-screen button {
         top: 10vh;
     }
 
