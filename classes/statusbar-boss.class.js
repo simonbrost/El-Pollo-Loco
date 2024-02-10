@@ -1,3 +1,7 @@
+/**
+ * Represents the boss status bar in the game, extending the functionality of a drawable object.
+ * @extends DrawableObject
+ */
 class BossStatusbar extends DrawableObject{
 
     IMAGES = [
@@ -11,6 +15,10 @@ class BossStatusbar extends DrawableObject{
 
     percentage = 100;
 
+    /**
+     * Constructs a new instance of the BossStatusbar class.
+     * Loads the health bar images, sets initial position and size, and initializes the percentage.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -20,16 +28,28 @@ class BossStatusbar extends DrawableObject{
         this.setPercentage(100);
     }
 
+    /**
+     * Sets the x-coordinate of the boss status bar.
+     * @param {number} x - The x-coordinate value.
+     */
     setXCoordinate(x) {
         this.x = x;
     }
 
+    /**
+     * Sets the health percentage and updates the displayed image accordingly.
+     * @param {number} percentage - The health percentage value.
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
-        let path = this.IMAGES[this.resolveImageIndex()];   // hier bekommen wir eine Zahl von 0-5 aus der Funktion resolveImageIndex()
-        this.img = this.imageCache[path];                   // hier wird dann das entsprechnde Bild der Vraiable img in drawableobject zugewiesen und angezeigt
+        let path = this.IMAGES[this.resolveImageIndex()];
+        this.img = this.imageCache[path];
     }
 
+    /**
+     * Resolves the index of the image based on the health percentage.
+     * @returns {number} - The index of the image in the IMAGES array.
+     */
     resolveImageIndex() {
         if(this.percentage == 100) {
             return 5;

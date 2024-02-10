@@ -1,3 +1,7 @@
+/**
+ * Represents the character object in the game.
+ * @extends MovableObject
+ */
 class Character extends MovableObject {
     y = 80;
     width = 150;
@@ -63,6 +67,10 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-57.png',
     ];
 
+    /**
+    * Constructs a new instance of the Character class.
+    * Loads the initial image, and initializes various animation images.
+    */
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_IDLE);
@@ -78,11 +86,19 @@ class Character extends MovableObject {
         this.offset.right = 40;
     }
 
+    /**
+    * Initiates animation for the character object.
+    * Calls the moveCharacter method and sets up animation intervals.
+    */
     animate() {
         setInterval(() => this.moveCharacter(), 1000 / 60);
         this.animateCharacter();
     }
-
+    /**
+    * Handles character movement, including right, left, and jump actions.
+    * Pauses the running sound, checks for movement and jump conditions,
+    * checks for boss encounter, and updates the camera position.
+    */
     moveCharacter() {
         sounds.RUNNING.pause();
         if (this.canMoveRight())
@@ -95,10 +111,18 @@ class Character extends MovableObject {
         this.world.camera_x = -this.x + 100;
     }
 
+    /**
+    * Checks if the character can move to the right.
+    *
+    * @returns {boolean} - True if the character can move right, false otherwise.
+    */
     canMoveRight() {
         return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x
     }
 
+    /**
+    * Moves the character to the right, plays running sound, and updates direction.
+    */
     moveRight() {
         super.moveRight();
         this.otherDirection = false;
@@ -106,10 +130,18 @@ class Character extends MovableObject {
         this.direction = "right";
     }
 
+    /**
+    * Checks if the character can move to the left.
+    *
+    * @returns {boolean} - True if the character can move left, false otherwise.
+    */
     canMoveLeft() {
         return this.world.keyboard.LEFT && this.x > 0
     }
 
+    /**
+    * Moves the character to the left, plays running sound, and updates direction.
+    */
     moveLeft() {
         super.moveLeft();
         this.otherDirection = true;
@@ -117,15 +149,28 @@ class Character extends MovableObject {
         this.direction = "left";
     }
 
+    /**
+    * Checks if the character can jump.
+    *
+    * @returns {boolean} - True if the character can jump, false otherwise.
+    */
     canJump() {
         return this.world.keyboard.SPACE && !this.isAboveGround()
     }
 
+    /**
+    * Initiates a jump for the character.
+    * Calls the superclass's jump method and plays the jump sound.
+    */
     jump() {
         super.jump();
         sounds.JUMP.play();
     }
 
+    /**
+    * Checks if the character encounters the boss during gameplay.
+    * Pauses the background music, plays the boss encounter sound, and triggers the boss's walk.
+    */
     checkForBossEncounter() {
         if (this.x >= 3500) {
             sounds.MUSIC.pause();
@@ -138,6 +183,10 @@ class Character extends MovableObject {
         };
     }
 
+    /**
+    * Manages character animations based on different intervals.
+    * Initiates animations for idle, dying, hurt, jumping, and walking.
+    */
     animateCharacter() {
         const idleInterval = 400;
         const dyingInterval = 80;
@@ -153,16 +202,29 @@ class Character extends MovableObject {
         this.playWalking(walkingInterval);
     }
 
+    /**
+    * Initiates and plays the idle animation with a specified interval.
+    * Checks if the character is not above ground and not hurt before playing the animation.
+    *
+    * @param {number} idleInterval - The interval for the idle animation in milliseconds.
+    * @returns {number} - The interval ID for the idle animation.
+    */
     playIdle(idleInterval) {
         let idleIntervalId = setInterval(() => {
             if (!this.isAboveGround() && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_IDLE);
             }
         }, idleInterval);
-    
+
         return idleIntervalId; // Gibt die Interval-ID zurück
     }
 
+    /**
+    * Initiates and plays the dying animation with a specified interval.
+    * Checks if the character is dead before playing the animation and clears the idle interval.
+    *
+    * @param {number} dyingInterval - The interval for the dying animation in milliseconds.
+    */
     playDying(dyingInterval) {
         setInterval(() => {
             if (this.characterIsDead()) {
@@ -172,6 +234,13 @@ class Character extends MovableObject {
         }, dyingInterval);
     }
 
+    /**
+    * Initiates and plays the hurt animation with a specified interval.
+    * Checks if the character is hurt (but not dead) before playing the animation
+    * and clears the idle interval.
+    *
+    * @param {number} hurtInterval - The interval for the hurt animation in milliseconds.
+    */
     playHurt(hurtInterval) {
         setInterval(() => {
             if (!this.characterIsDead() && this.isHurt()) {
@@ -181,6 +250,13 @@ class Character extends MovableObject {
         }, hurtInterval);
     }
 
+    /**
+    * Initiates and plays the jumping animation with a specified interval.
+    * Checks if the character is above ground before playing the animation
+    * and clears the idle interval.
+    *
+    * @param {number} jumpingInterval - The interval for the jumping animation in milliseconds.
+    */
     playJumping(jumpingInterval) {
         setInterval(() => {
             if (this.isAboveGround()) {
@@ -190,6 +266,13 @@ class Character extends MovableObject {
         }, jumpingInterval);
     }
 
+    /**
+    * Initiates and plays the walking animation with a specified interval.
+    * Checks if the character is not above ground and is moving left or right before playing the animation,
+    * and clears the idle interval.
+    *
+    * @param {number} walkingInterval - The interval for the walking animation in milliseconds.
+    */
     playWalking(walkingInterval) {
         setInterval(() => {
             if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {

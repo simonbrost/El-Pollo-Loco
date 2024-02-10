@@ -11,6 +11,9 @@ let muteIcon;
 let muteIconIngame;
 let mute = false;
 
+/**
+ * Initializes the game by getting references to HTML elements.
+ */
 function init() {
     startScreen = document.getElementById('start-screen');
     startButton = document.getElementById('start-button');
@@ -22,6 +25,10 @@ function init() {
     muteIconIngame = document.getElementById('mute-icon-ingame');
 }
 
+/**
+ * Starts the game by initializing sounds, playing background music, initializing the level,
+ * creating a game world, and updating the display.
+ */
 function startGame() {
     sounds.initialize();
     sounds.MUSIC.play();
@@ -33,6 +40,9 @@ function startGame() {
     muteButtonIngame.style.display = 'block';
 }
 
+/**
+ * Enlarges the game by starting it and requesting fullscreen mode.
+ */
 function enlargeGame() {
     startGame();
     const canvas = document.getElementById('canvas');
@@ -48,31 +58,51 @@ function enlargeGame() {
     }
 }
 
+/**
+ * Displays the game over screen and hides the canvas.
+ */
 function showGameOverScreen() {
     gameOverScreen.style.display = 'block';
     canvas.style.display = 'none';
 }
 
+/**
+ * Hides the game over screen.
+ */
 function hideGameOverScreen() {
     gameOverScreen.style.display = 'none';
 }
 
+/**
+ * Displays the "You Win" screen, hides the canvas, and hides the game over screen.
+ */
 function showYouWinScreen() {
     youWinScreen.style.display = 'block';
     canvas.style.display = 'none';
     gameOverScreen.style.display = 'none';
 }
 
+/**
+ * Hides the "You Win" screen.
+ */
 function hideYouWinScreen() {
     youWinScreen.style.display = 'none';
 }
 
+/**
+ * Handles the game over scenario by showing the game over screen, pausing the background music,
+ * and playing the game over sound.
+ */
 function gameOver() {
     showGameOverScreen();
     sounds.MUSIC.pause();
     sounds.GAMEOVER.play();
 }
 
+/**
+ * Handles the "You Win" scenario by showing the "You Win" screen, muting certain sounds related to the boss,
+ * and playing the victory sound.
+ */
 function youWin() {
     showYouWinScreen();
     sounds.BOSS_ENCOUNTER.volume = 0;
@@ -80,10 +110,18 @@ function youWin() {
     sounds.VICTORY.play();
 }
 
+/**
+ * Restarts the game by reloading the window.
+ */
 function restartGame() {
     window.location.reload();
 }
 
+/**
+ * Event listener for handling keydown events.
+ * Sets corresponding properties in the keyboard object based on the pressed key.
+ * @param {KeyboardEvent} event - The keydown event.
+ */
 window.addEventListener('keydown', (event) => {
     let keyCode = event.keyCode;
 
@@ -100,6 +138,11 @@ window.addEventListener('keydown', (event) => {
     }
 });
 
+/**
+ * Event listener for handling keyup events.
+ * Sets corresponding properties in the keyboard object based on the released key.
+ * @param {KeyboardEvent} event - The keyup event.
+ */
 window.addEventListener('keyup', (event) => {
     let keyCode = event.keyCode;
 
@@ -116,12 +159,19 @@ window.addEventListener('keyup', (event) => {
     }
 });
 
+/**
+ * Event listener to prevent default action for space key on keydown.
+ * @param {KeyboardEvent} e - The keydown event.
+ */
 document.addEventListener('keydown', function (e) {
     if (e.code === 'Space') {
         e.preventDefault();
     }
 });
 
+/**
+ * Event listeners for mobile controls to handle touch events.
+ */
 document.getElementById('mobile-left').addEventListener('touchstart', () => {
     keyboard.LEFT = true;
 });

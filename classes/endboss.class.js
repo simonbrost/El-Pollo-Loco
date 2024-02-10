@@ -1,3 +1,7 @@
+/**
+ * Represents an end boss object in the game.
+ * @extends MovableObject
+ */
 class Endboss extends MovableObject {
     height = 500;
     width = 300;
@@ -55,6 +59,10 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/3_attack/G20.png'
     ];
 
+    /**
+    * Constructs a new instance of the Endboss class.
+    * Loads initial image, sets initial position, and loads animation images for alert, walking, hurt, dying, and attacking.
+    */
     constructor() {
         super().loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
@@ -66,6 +74,10 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+    * Initiates and plays various animations for the end boss, including alert, walking, attacking, dying, and hurt states.
+    * Uses specified intervals for each animation.
+    */
     animate() {
         const alertInterval = 200;
         const walkingInterval = 100;
@@ -80,12 +92,22 @@ class Endboss extends MovableObject {
         this.playHurt(hurtInterval);
     }
 
+    /**
+    * Initiates and plays the alert animation for the end boss with a specified interval.
+    *
+    * @param {number} interval - The interval for the alert animation in milliseconds.
+    */
     playAlert(interval) {
         setInterval(() => {
             this.playAnimation(this.IMAGES_ALERT);
         }, interval);
     }
 
+    /**
+    * Initiates and plays the walking animation for the end boss with a specified interval.
+    *
+    * @param {number} interval - The interval for the walking animation in milliseconds.
+    */
     playWalk(interval) {
         setInterval(() => {
             if (this.walkStart) {
@@ -95,6 +117,11 @@ class Endboss extends MovableObject {
         }, interval);
     }
 
+    /**
+    * Initiates and plays the attacking animation for the end boss with a specified interval.
+    *
+    * @param {number} interval - The interval for the attacking animation in milliseconds.
+    */
     playAttack(interval) {
         setInterval(() => {
             if (this.attackStart) {
@@ -103,6 +130,11 @@ class Endboss extends MovableObject {
         }, interval);
     }
 
+    /**
+    * Initiates and plays the dying animation for the end boss with a specified interval.
+    *
+    * @param {number} interval - The interval for the dying animation in milliseconds.
+    */
     playDying(interval) {
         setInterval(() => {
             if (this.bossIsDead()) {
@@ -111,6 +143,11 @@ class Endboss extends MovableObject {
         }, interval);
     }
 
+    /**
+    * Initiates and plays the hurt animation for the end boss with a specified interval.
+    *
+    * @param {number} interval - The interval for the hurt animation in milliseconds.
+    */
     playHurt(interval) {
         setInterval(() => {
             if (this.isHurt()) {
@@ -119,12 +156,20 @@ class Endboss extends MovableObject {
         }, interval);
     }
 
+    /**
+    * Initiates the walking state for the end boss, allowing it to chase the character.
+    * Sets the walkStart flag to true if the boss is not hit.
+    */
     bossWalk() {
         if (!this.isHit) {
             this.walkStart = true;
         }
     }
 
+    /**
+    * Causes the end boss to chase the character.
+    * The boss moves left or right based on the character's position and plays the boss walk sound.
+    */
     chaseCharacter() {
         const character = world.character;
         if (character.x < this.x) {
@@ -138,6 +183,10 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+    * Initiates the boss attack state, stopping the walk and starting the attack animation.
+    * After a delay, resets the walk and attack states.
+    */
     bossAttack() {
         this.walkStart = false;
         this.attackStart = true;

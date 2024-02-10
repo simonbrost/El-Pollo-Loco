@@ -13,6 +13,9 @@ const sounds = {
   
     allSounds: [],
   
+    /**
+     * Initializes all sounds and sets their volume.
+     */
     initialize() {
       Object.values(this).forEach(value => {
         if (value instanceof Audio) {
@@ -24,6 +27,9 @@ const sounds = {
       });
     },
 
+    /**
+     * Toggles the mute state of all sounds and updates mute icons.
+     */
     toggleMuteState() {
         const img = document.getElementById('mute-icon');
         const imgIngame = document.getElementById('mute-icon-ingame');

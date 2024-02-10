@@ -1,8 +1,12 @@
+/**
+ * Represents a chicken enemy in the game
+ * @extends MovableObject
+ */
 class Chicken extends MovableObject {
     width = 80;
     height = 80;
     y = 350;
-    isHit= false;
+    isHit = false;
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -16,6 +20,11 @@ class Chicken extends MovableObject {
         right: 20,
     }
 
+    /**
+     * Constructs a new instance of the Chicken class.
+     * Loads initial image, sets initial position, loads animation images,
+     * sets random speed, and initiates animation.
+     */
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.x = 400 + Math.random() * 3000;
@@ -27,6 +36,9 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Animates the chicken object, making it move left and play the walking animation.
+     */
     animate() {
         if (!this.isHit) {
             const moveLeftSpeed = 1000 / 60;
@@ -37,6 +49,10 @@ class Chicken extends MovableObject {
         }
     }
 
+    /**
+     * Handles the event when the chicken enemy is hit and killed.
+     * Stops the movement and animation, loads the death image, and plays the death sound.
+     */
     enemyDies() {
         this.isHit = true;
         this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');

@@ -1,3 +1,6 @@
+/**
+ * Represents the game world, containing the character, boss, level, and various status bars.
+ */
 class World {
     character = new Character();
     boss = new Endboss();
@@ -14,6 +17,12 @@ class World {
     amountOfCoins = 0;
     amountOfBottles = 0;
 
+    /**
+     * Constructs a new instance of the World class.
+     * Initializes the canvas, rendering context, keyboard input, and sets up the initial state of the world.
+     * @param {HTMLCanvasElement} canvas - The canvas element for rendering.
+     * @param {Keyboard} keyboard - The keyboard input object.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -26,17 +35,26 @@ class World {
         this.checkCollisions();
     }
 
+    /**
+     * Sets up the initial state of the world by assigning the world property to the character and boss objects.
+     */
     setWorld() {
         this.character.world = this;
         this.boss.world = this;
     }
 
+    /**
+     * Adds the boss to the list of enemies in the current level if it is not already included.
+     */
     addBossToEnemies() {
         if (!(this.level.enemies.includes(this.boss))) {
             this.level.enemies.push(this.boss);
         }
     }
 
+    /**
+     * Initiates the game loop, checking collisions and throwable objects at regular intervals.
+     */
     run() {
         setInterval(() => {
             this.checkCollisions();
@@ -44,6 +62,9 @@ class World {
         }, 20);
     }
 
+    /**
+     * Checks for player input to throw objects and creates a new ThrowableObject if conditions are met.
+     */
     checkThrowObjects() {
         if (this.keyboard.UP && this.amountOfBottles > 0 && this.character.canThrow) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
@@ -55,6 +76,9 @@ class World {
         }
     }
 
+    /**
+     * Checks for collisions between game objects.
+     */
     checkCollisions() {
         this.characterChickenCollision();
         this.characterBossCollision();
@@ -63,6 +87,10 @@ class World {
         this.characterCoinCollision();
         this.characterBottleCollision();
     }
+
+    /**
+     * Handles collisions between the character and chickens.
+     */
     characterChickenCollision() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
@@ -78,6 +106,9 @@ class World {
         });
     }
 
+    /**
+     * Handles collisions between the character and the boss.
+     */
     characterBossCollision() {
         if (this.character.isColliding(this.boss)) {
             if (this.character.speedY < 0 && this.character.isAboveGround()) {
@@ -92,6 +123,9 @@ class World {
         }
     }
 
+    /**
+     * Handles collisions between throwable objects (bottles) and chickens.
+     */
     bottleChickenCollision() {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             let hitChicken = false;
@@ -109,6 +143,9 @@ class World {
         });
     }
 
+    /**
+     * Handles collisions between throwable objects (bottles) and the boss.
+     */
     bottleBossCollision() {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             if (!bottle.hasCollidedWithBoss) {
@@ -122,6 +159,9 @@ class World {
         });
     }
 
+    /**
+     * Resolves the effects of a bottle collision (hit or miss).
+     */
     resolveBottle(bottle, bottleIndex) {
         clearInterval(bottle.throwInterval);
         bottle.speedX = 0;
@@ -136,6 +176,9 @@ class World {
         }, 100);
     }
 
+    /**
+     * Handles collisions between the character and coins.
+     */
     characterCoinCollision() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
@@ -145,6 +188,9 @@ class World {
         });
     }
 
+    /**
+     * Handles collisions between the character and bottles.
+     */
     characterBottleCollision() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
@@ -154,6 +200,9 @@ class World {
         });
     }
 
+    /**
+     * Draws the game elements on the canvas.
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
@@ -182,12 +231,20 @@ class World {
         });
     }
 
+    /**
+     * Adds multiple objects to the map.
+     * @param {Array} objects - An array of objects to be added to the map.
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         });
     }
 
+    /**
+     * Removes an object from the world and triggers a redraw.
+     * @param {Object} objectToRemove - The object to be removed from the world.
+     */
     removeObjectFromWorld(objectToRemove) {
         if (objectToRemove instanceof Coin) {
             this.level.coins = this.level.coins.filter(coin => coin !== objectToRemove);
@@ -199,6 +256,10 @@ class World {
         this.draw();
     }
 
+    /**
+     * Adds an object to the map, handling flipping if needed.
+     * @param {Object} mo - The object to be added to the map.
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -212,6 +273,10 @@ class World {
         }
     }
 
+    /**
+     * Flips the image horizontally.
+     * @param {Object} mo - The object whose image will be flipped.
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -219,6 +284,10 @@ class World {
         mo.x = mo.x * -1;
     }
 
+    /**
+     * Restores the original image orientation.
+     * @param {Object} mo - The object whose image will be restored.
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();

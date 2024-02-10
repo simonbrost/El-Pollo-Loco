@@ -1,3 +1,7 @@
+/**
+ * Represents the bottle status bar in the game, extending the functionality of a drawable object.
+ * @extends DrawableObject
+ */
 class BottleStatusbar extends DrawableObject{
     
     IMAGES = [
@@ -11,6 +15,10 @@ class BottleStatusbar extends DrawableObject{
     
     percentage = 0;
 
+    /**
+     * Constructs a new instance of the BottleStatusbar class.
+     * Loads the bottle bar images, sets initial position and size, and initializes the percentage.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -21,12 +29,20 @@ class BottleStatusbar extends DrawableObject{
         this.setPercentage(0);
     }
 
+    /**
+     * Sets the fill percentage and updates the displayed image accordingly.
+     * @param {number} percentage - The fill percentage value.
+     */
     setPercentage(percentage) {
         this.percentage = percentage * 10;
-        let path = this.IMAGES[this.resolveImageIndex()];   // hier bekommen wir eine Zahl von 0-5 aus der Funktion resolveImageIndex()
-        this.img = this.imageCache[path];                   // hier wird dann das entsprechnde Bild der Vraiable img in drawableobject zugewiesen und angezeigt
+        let path = this.IMAGES[this.resolveImageIndex()];
+        this.img = this.imageCache[path];
     }
 
+    /**
+     * Resolves the index of the image based on the fill percentage.
+     * @returns {number} - The index of the image in the IMAGES array.
+     */
     resolveImageIndex() {
         if(this.percentage == 100) {
             return 5;
