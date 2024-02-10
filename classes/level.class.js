@@ -11,6 +11,6 @@ class Level {
         this.clouds = clouds;
         this.bottles = bottles;
         this.coins = coins;
-        this.enemies = enemies; //this.enemies bezieht sich auf die variable in zeile 2 und enemies nach dem gleichzeichen bezieht sich auf  die variable in der Klammer
+        this.enemies = enemies;
     }
 }

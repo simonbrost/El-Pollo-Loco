@@ -3,7 +3,7 @@ class Character extends MovableObject {
     width = 150;
     height = 250;
     speed = 10;
-    world; // das geben wir diese klasse damit man hier auch auf die variablen aus der world classe zugreifen kann wenn ich das richtig verstanden habe
+    world;
     canThrow = true;
     direction;
     IMAGES_IDLE = [
@@ -16,7 +16,17 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/idle/I-7.png',
         'img/2_character_pepe/1_idle/idle/I-8.png',
         'img/2_character_pepe/1_idle/idle/I-9.png',
-        'img/2_character_pepe/1_idle/idle/I-10.png'
+        'img/2_character_pepe/1_idle/idle/I-10.png',
+        'img/2_character_pepe/1_idle/long_idle/I-11.png',
+        'img/2_character_pepe/1_idle/long_idle/I-12.png',
+        'img/2_character_pepe/1_idle/long_idle/I-13.png',
+        'img/2_character_pepe/1_idle/long_idle/I-14.png',
+        'img/2_character_pepe/1_idle/long_idle/I-15.png',
+        'img/2_character_pepe/1_idle/long_idle/I-16.png',
+        'img/2_character_pepe/1_idle/long_idle/I-17.png',
+        'img/2_character_pepe/1_idle/long_idle/I-18.png',
+        'img/2_character_pepe/1_idle/long_idle/I-19.png',
+        'img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -53,7 +63,7 @@ class Character extends MovableObject {
     ];
 
     constructor() {
-        super().loadImage('img/2_character_pepe/2_walk/W-21.png'); //ruft (dank der Methode "super") aus der übergeordneten Klasse die Funktion "loadImage()" auf
+        super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
@@ -143,7 +153,9 @@ class Character extends MovableObject {
 
     playIdle(idleInterval) {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_IDLE);
+            if (!this.isAboveGround() && !this.isHurt()) {
+                this.playAnimation(this.IMAGES_IDLE);
+            }
         }, idleInterval);
     }
 
