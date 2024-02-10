@@ -6,6 +6,7 @@ class Character extends MovableObject {
     world;
     canThrow = true;
     direction;
+    idleIntervalId;
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -144,7 +145,8 @@ class Character extends MovableObject {
         const jumpingInterval = 90;
         const walkingInterval = 50;
 
-        this.playIdle(idleInterval);
+        this.playIdle(idleInterval); // Beispiel für die Verwendung mit einem Idle-Interval von 400 Millisekunden
+
         this.playDying(dyingInterval);
         this.playHurt(hurtInterval);
         this.playJumping(jumpingInterval);
@@ -152,17 +154,20 @@ class Character extends MovableObject {
     }
 
     playIdle(idleInterval) {
-        setInterval(() => {
+        let idleIntervalId = setInterval(() => {
             if (!this.isAboveGround() && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_IDLE);
             }
         }, idleInterval);
+    
+        return idleIntervalId; // Gibt die Interval-ID zurück
     }
 
     playDying(dyingInterval) {
         setInterval(() => {
             if (this.characterIsDead()) {
                 this.playAnimation(this.IMAGES_DYING);
+                clearInterval(this.idleIntervalId); // Stoppt das Idle-Interval
             }
         }, dyingInterval);
     }
@@ -171,6 +176,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (!this.characterIsDead() && this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
+                clearInterval(this.idleIntervalId); // Stoppt das Idle-Interval
             }
         }, hurtInterval);
     }
@@ -179,6 +185,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
+                clearInterval(this.idleIntervalId); // Stoppt das Idle-Interval
             }
         }, jumpingInterval);
     }
@@ -187,6 +194,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
                 this.playAnimation(this.IMAGES_WALKING);
+                clearInterval(this.idleIntervalId); // Stoppt das Idle-Interval
             }
         }, walkingInterval);
     }
