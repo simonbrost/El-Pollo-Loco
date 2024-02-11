@@ -9,8 +9,8 @@ class Character extends MovableObject {
     speed = 10;
     world;
     canThrow = true;
+    idleTimer = 0;
     direction;
-    idleIntervalId;
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -21,7 +21,9 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/idle/I-7.png',
         'img/2_character_pepe/1_idle/idle/I-8.png',
         'img/2_character_pepe/1_idle/idle/I-9.png',
-        'img/2_character_pepe/1_idle/idle/I-10.png',
+        'img/2_character_pepe/1_idle/idle/I-10.png'
+    ];
+    IMAGES_LONG_IDLE = [
         'img/2_character_pepe/1_idle/long_idle/I-11.png',
         'img/2_character_pepe/1_idle/long_idle/I-12.png',
         'img/2_character_pepe/1_idle/long_idle/I-13.png',
@@ -74,6 +76,7 @@ class Character extends MovableObject {
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_IDLE);
+        this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_HURT);
@@ -92,8 +95,9 @@ class Character extends MovableObject {
     */
     animate() {
         setInterval(() => this.moveCharacter(), 1000 / 60);
-        this.animateCharacter();
+        setInterval(() => this.animateCharacter(), 160);
     }
+    
     /**
     * Handles character movement, including right, left, and jump actions.
     * Pauses the running sound, checks for movement and jump conditions,
@@ -184,101 +188,32 @@ class Character extends MovableObject {
     }
 
     /**
-    * Manages character animations based on different intervals.
-    * Initiates animations for idle, dying, hurt, jumping, and walking.
+    * Animates the character based on various states such as movement, injuries, or death.
+    * This function updates the timer and plays the corresponding animations depending on the character's state.
     */
     animateCharacter() {
-        const idleInterval = 400;
-        const dyingInterval = 80;
-        const hurtInterval = 120;
-        const jumpingInterval = 90;
-        const walkingInterval = 50;
-
-        this.playIdle(idleInterval); // Beispiel für die Verwendung mit einem Idle-Interval von 400 Millisekunden
-
-        this.playDying(dyingInterval);
-        this.playHurt(hurtInterval);
-        this.playJumping(jumpingInterval);
-        this.playWalking(walkingInterval);
-    }
-
-    /**
-    * Initiates and plays the idle animation with a specified interval.
-    * Checks if the character is not above ground and not hurt before playing the animation.
-    *
-    * @param {number} idleInterval - The interval for the idle animation in milliseconds.
-    * @returns {number} - The interval ID for the idle animation.
-    */
-    playIdle(idleInterval) {
-        let idleIntervalId = setInterval(() => {
-            if (!this.isAboveGround() && !this.isHurt()) {
-                this.playAnimation(this.IMAGES_IDLE);
-            }
-        }, idleInterval);
-
-        return idleIntervalId; // Gibt die Interval-ID zurück
-    }
-
-    /**
-    * Initiates and plays the dying animation with a specified interval.
-    * Checks if the character is dead before playing the animation and clears the idle interval.
-    *
-    * @param {number} dyingInterval - The interval for the dying animation in milliseconds.
-    */
-    playDying(dyingInterval) {
-        setInterval(() => {
-            if (this.characterIsDead()) {
-                this.playAnimation(this.IMAGES_DYING);
-                clearInterval(this.idleIntervalId); // Stoppt das Idle-Interval
-            }
-        }, dyingInterval);
-    }
-
-    /**
-    * Initiates and plays the hurt animation with a specified interval.
-    * Checks if the character is hurt (but not dead) before playing the animation
-    * and clears the idle interval.
-    *
-    * @param {number} hurtInterval - The interval for the hurt animation in milliseconds.
-    */
-    playHurt(hurtInterval) {
-        setInterval(() => {
-            if (!this.characterIsDead() && this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-                clearInterval(this.idleIntervalId); // Stoppt das Idle-Interval
-            }
-        }, hurtInterval);
-    }
-
-    /**
-    * Initiates and plays the jumping animation with a specified interval.
-    * Checks if the character is above ground before playing the animation
-    * and clears the idle interval.
-    *
-    * @param {number} jumpingInterval - The interval for the jumping animation in milliseconds.
-    */
-    playJumping(jumpingInterval) {
-        setInterval(() => {
-            if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-                clearInterval(this.idleIntervalId); // Stoppt das Idle-Interval
-            }
-        }, jumpingInterval);
-    }
-
-    /**
-    * Initiates and plays the walking animation with a specified interval.
-    * Checks if the character is not above ground and is moving left or right before playing the animation,
-    * and clears the idle interval.
-    *
-    * @param {number} walkingInterval - The interval for the walking animation in milliseconds.
-    */
-    playWalking(walkingInterval) {
-        setInterval(() => {
-            if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
-                this.playAnimation(this.IMAGES_WALKING);
-                clearInterval(this.idleIntervalId); // Stoppt das Idle-Interval
-            }
-        }, walkingInterval);
+        if (!this.isAboveGround() && !this.isHurt()) {
+            this.playAnimation(this.IMAGES_IDLE);
+        }
+        if (this.idleTimer > 30) {
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+        }
+        if (this.characterIsDead()) {
+            this.idleTimer = 0;
+            this.playAnimation(this.IMAGES_DYING);
+        }
+        if (!this.characterIsDead() && this.isHurt()) {
+            this.idleTimer = 0;
+            this.playAnimation(this.IMAGES_HURT);
+        }
+        if (this.isAboveGround()) {
+            this.idleTimer = 0;
+            this.playAnimation(this.IMAGES_JUMPING);
+        }
+        if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
+            this.idleTimer = 0;
+            this.playAnimation(this.IMAGES_WALKING);
+        }
+        this.idleTimer++
     }
 }
